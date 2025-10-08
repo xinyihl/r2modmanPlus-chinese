@@ -16,18 +16,18 @@
             </template>
             <template v-slot:other-icons>
                 <span class='card-header-icon' v-if="isModDeprecated(key)">
-                    <i class='fas fa-exclamation-triangle' v-tooltip.left="'This mod is potentially broken'"></i>
+                    <i class='fas fa-exclamation-triangle' v-tooltip.left="'此模组可能无法使用'"></i>
                 </span>
                 <span class='card-header-icon' v-if="key.isPinned() && !readOnly">
-                    <i class='fas fa-map-pin' v-tooltip.left="'Pinned on Thunderstore'"></i>
+                    <i class='fas fa-map-pin' v-tooltip.left="'在 Thunderstore 上被固定'"></i>
                 </span>
                 <span class='card-header-icon' v-if="key.getDonationLink() && !readOnly">
                     <ExternalLink :url="key.getDonationLink()" target="external" tag="span">
-                        <i class='fas fa-heart' v-tooltip.left="'Donate to the mod author'"></i>
+                        <i class='fas fa-heart' v-tooltip.left="'向模组作者捐款'"></i>
                     </ExternalLink>
                 </span>
                 <span class='card-header-icon' v-if="isThunderstoreModInstalled(key) && !readOnly">
-                    <i class='fas fa-check' v-tooltip.left="'Mod already installed'"></i>
+                    <i class='fas fa-check' v-tooltip.left="'已安装'"></i>
                 </span>
             </template>
         </OnlineRowCard>

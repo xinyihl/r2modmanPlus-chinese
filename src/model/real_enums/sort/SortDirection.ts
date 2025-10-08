@@ -1,6 +1,6 @@
 export enum SortDirection {
 
-    STANDARD = "Standard",
-    REVERSE = "Reverse"
+    STANDARD = "正序",
+    REVERSE = "反序"
 
 }

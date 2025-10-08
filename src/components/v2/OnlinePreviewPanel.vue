@@ -175,6 +175,12 @@ function dragEnd(event: DragEvent) {
         .then(settings => settings.setPreviewPanelWidth(previewPanelWidth.value));
 }
 
+const i18n = {
+    'README': "简介",
+    'CHANGELOG': "更改记录",
+    'Dependencies': "前置"
+}
+
 </script>
 
 <template>
@@ -191,27 +197,27 @@ function dragEnd(event: DragEvent) {
                 {{ mod.getName() }}
             </h1>
                 <h2 class="subtitle">
-                    By {{ mod.getOwner() }}
+                    作者：{{ mod.getOwner() }}
                 </h2>
                 <div class="margin-top margin-bottom">
                     <p class="description">{{ mod.getDescription() }}</p>
                 </div>
-                <p class='card-timestamp'><strong>Downloads:</strong> {{mod.getDownloadCount()}}</p>
-                <p class='card-timestamp'><strong>Likes:</strong> {{mod.getRating()}}</p>
-                <p class='card-timestamp'><strong>Last updated:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
-                <p class='card-timestamp'><strong>Categories:</strong> {{getReadableCategories(mod)}}</p>
+                <p class='card-timestamp'><strong>下载量:</strong> {{mod.getDownloadCount()}}</p>
+                <p class='card-timestamp'><strong>收藏量:</strong> {{mod.getRating()}}</p>
+                <p class='card-timestamp'><strong>最后更新时间:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
+                <p class='card-timestamp'><strong>分类:</strong> {{getReadableCategories(mod)}}</p>
             </div>
             <div class="sticky-top inherit-background-colour sticky-top--no-shadow sticky-top--opaque no-margin sticky-top--no-padding">
                 <div class="button-group">
-                    <button class="button is-info" @click="showDownloadModal(mod)">Download</button>
-                    <ExternalLink tag="button" class="button" :url="props.mod.getPackageUrl()">View online</ExternalLink>
+                    <button class="button is-info" @click="showDownloadModal(mod)">下载</button>
+                    <ExternalLink tag="button" class="button" :url="props.mod.getPackageUrl()">在线查看</ExternalLink>
                     <ExternalLink v-if="props.mod.getDonationLink()" tag="button" class="button" :url="props.mod.getDonationLink()">Donate</ExternalLink>
                 </div>
                 <div class="tabs margin-top">
                     <ul>
-                        <li :class="{'is-active': activeTab === 'README'}"><a @click="setActiveTab('README')">README</a></li>
-                        <li :class="{'is-active': activeTab === 'CHANGELOG'}"><a @click="setActiveTab('CHANGELOG')">CHANGELOG</a></li>
-                        <li :class="{'is-active': activeTab === 'Dependencies'}"><a @click="setActiveTab('Dependencies')">Dependencies ({{ dependencies.length }})</a></li>
+                        <li :class="{'is-active': activeTab === 'README'}"><a @click="setActiveTab('README')">简介</a></li>
+                        <li :class="{'is-active': activeTab === 'CHANGELOG'}"><a @click="setActiveTab('CHANGELOG')">更改记录</a></li>
+                        <li :class="{'is-active': activeTab === 'Dependencies'}"><a @click="setActiveTab('Dependencies')">前置 ({{ dependencies.length }})</a></li>
                     </ul>
                 </div>
             </div>
@@ -219,7 +225,7 @@ function dragEnd(event: DragEvent) {
                 <template v-if="loadingPanel">
                     <div class="notification">
                         <div class="container">
-                            <p>Fetching {{ activeTab }} for {{ props.mod.getFullName() }}</p>
+                            <p>正在获取用于 {{ props.mod.getFullName() }} 的{{ i18n[activeTab] }}</p>
                         </div>
                     </div>
                 </template>
@@ -230,7 +236,7 @@ function dragEnd(event: DragEvent) {
                     <template v-else>
                         <div class="notification">
                             <div class="container">
-                                <p>{{ props.mod.getName() }} has no dependencies</p>
+                                <p>{{ props.mod.getName() }} 没有前置</p>
                             </div>
                         </div>
                     </template>
@@ -238,7 +244,7 @@ function dragEnd(event: DragEvent) {
                 <template v-else-if="activeTab === 'README'">
                     <template v-if="readmeError !== null">
                         <div class="notification is-danger">
-                            <h2 class="title is-6">Unable to fetch README for {{ props.mod.getFullName() }}</h2>
+                            <h2 class="title is-6">无法获取 {{ props.mod.getFullName() }} 的简介</h2>
                             <p>{{ readmeError.message }}</p>
                         </div>
                     </template>
@@ -249,7 +255,7 @@ function dragEnd(event: DragEvent) {
                 <template v-else-if="activeTab === 'CHANGELOG'">
                     <template v-if="changelogError !== null">
                         <div class="notification is-danger">
-                            <h2 class="title is-6">Unable to fetch CHANGELOG for {{ props.mod.getFullName() }}</h2>
+                            <h2 class="title is-6">无法获取 {{ props.mod.getFullName() }} 的更改记录</h2>
                             <p>{{ changelogError.message }}</p>
                         </div>
                     </template>

@@ -1,12 +1,12 @@
 <template>
     <div id="config-entry-wrapper">
         <div id="config-entry-actions">
-            <button class="button is-info margin-right margin-right--half-width" @click="save">Save</button>
-            <button class="button is-danger" @click="cancel">Cancel</button>
+            <button class="button is-info margin-right margin-right--half-width" @click="save">保存</button>
+            <button class="button is-danger" @click="cancel">取消</button>
         </div>
         <div id="config-entry-main" v-if="configurationFileHolder.configurationFile">
             <div id="config-entry-sections">
-                <h3 class='subtitle is-3'>Sections</h3>
+                <h3 class='subtitle is-3'>配置项</h3>
                 <ul>
                     <template v-for="(section, sectionIndex) in configurationFileHolder.configurationFile.sections" :key="`li-section-${sectionIndex}-${section.sectionName}`">
                         <li v-if="section.sectionName.length > 0">
@@ -36,10 +36,10 @@
                                             </span>
                                     </div>
                                     <div v-if="isDisplayTooLong(entry) && entriesWithExpandedComments.includes(entry)">
-                                        <a href="#" @click="() => toggleEntryExpansion(entry)">Show less</a>
+                                        <a href="#" @click="() => toggleEntryExpansion(entry)">简略信息</a>
                                     </div>
                                     <div v-else-if="isDisplayTooLong(entry)">
-                                        <a href="#" @click="() => toggleEntryExpansion(entry)">Show more</a>
+                                        <a href="#" @click="() => toggleEntryExpansion(entry)">详细信息</a>
                                     </div>
                                 </div>
                                 <template v-if="entry.displayType === 'single-select' || entry.displayType === 'boolean'">

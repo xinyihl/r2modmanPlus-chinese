@@ -32,33 +32,33 @@ async function updateAllToLatestVersion() {
 <template>
     <ModalCard id="update-all-installed-mods-modal" :is-active="isOpen" :can-close="true" v-if="modsWithUpdates.length === 0" @close-modal="closeModal()">
         <template v-slot:header>
-            <h2 class='modal-title'>No mods to update</h2>
+            <h2 class='modal-title'>没有 Mod 需要更新</h2>
         </template>
         <template v-slot:body>
-            <p>Either all installed mods are up to date, or there are no installed mods.</p>
+            <p>要么所有已安装的 Mod 都是最新的，要么没有安装任何 Mod。</p>
         </template>
         <template v-slot:footer>
-            <button class="button is-info" @click="closeModal()">Close</button>
+            <button class="button is-info" @click="closeModal()">关闭</button>
         </template>
     </ModalCard>
     <ModalCard id="update-all-installed-mods-modal" :is-active="isOpen" :can-close="true" v-else @close-modal="closeModal()">
         <template v-slot:header>
-            <h2 class='modal-title'>Update all installed mods</h2>
+            <h2 class='modal-title'>更新所有已安装 Mod</h2>
         </template>
         <template v-slot:body>
-            <p>All installed mods will be updated to their latest versions.</p>
-            <p>Any missing dependencies will be installed.</p>
-            <p>The following mods will be downloaded and installed:</p>
+            <p>所有安装的 Mod 都将更新到其最新版本。</p>
+            <p>将安装任何缺失的前置模组。</p>
+            <p>以下 Mod 将下载并安装：</p>
             <br/>
             <ul class="list">
                 <li class="list-item" v-for='(mod, index) in modsWithUpdates'
                     :key='`to-update-${index}-${mod.getFullName()}`'>
-                    {{mod.getName()}} will be updated to: {{mod.getLatestVersion()}}
+                    {{mod.getName()}} 将更新到: {{mod.getLatestVersion()}}
                 </li>
             </ul>
         </template>
         <template v-slot:footer>
-            <button class="button is-info" @click="updateAllToLatestVersion()">Update all</button>
+            <button class="button is-info" @click="updateAllToLatestVersion()">全部更新</button>
         </template>
     </ModalCard>
 </template>

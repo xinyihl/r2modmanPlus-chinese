@@ -5,45 +5,36 @@
         <div v-if="phase > PHASES.ERROR_STATES" class="modal z-top is-active">
             <div class="modal-content">
                 <div class="notification is-danger">
-                    <h3 class="title">Error</h3>
+                    <h3 class="title">错误</h3>
                     <h5 class="title is-5">{{error && error.name}}</h5>
                     <p>{{error && error.message}}</p>
                     <br />
-                    <h5 class="title is-5">Suggestion</h5>
+                    <h5 class="title is-5">建议</h5>
 
                     <p v-if="phase === PHASES.GAME_FAILED">
-                        This is a problem with the mod manager itself.
-                        If there's a newer version of the manager
-                        available, try installing it.
+                        这是 MOD 管理器本身的问题。
+                        如果有一个较新版本的管理器可用，请尝试安装它。
                     </p>
 
                     <div v-else-if="phase === PHASES.SETTINGS_FAILED">
                         <p>
-                            Loading of local user settings failed. You
-                            can use the button below to reset the
-                            settings, but note that all settings for all
-                            games will be lost and this can't be undone.
+                            加载本地用户设置失败。你可以使用下面的按钮重置设置，但要注意的是，所有游戏的所有设置都将丢失，且无法恢复。
                         </p>
                         <br />
                         <button @click="resetSettings" :disabled="resettingInProgress" class="button is-white">
-                            Reset settings
+                            重置设置
                         </button>
                     </div>
 
                     <p v-else-if="phase === PHASES.RESET_FAILED">
-                        Resetting of the settings failed. You can still
-                        try to reset the settings manually by following
-                        these
+                        重置设置失败。你仍然可以按照以下
                         <a @click="openLink('https://github.com/ebkr/r2modmanPlus/wiki/Error:-White-or-blank-game-select-screen-on-startup#corrupted-settings-on-update')">
-                            instructions.
-                        </a>
+                            说明
+                        </a>尝试手动重置设置
                     </p>
 
                     <p v-else-if="phase === PHASES.RETRY_FAILED">
-                        Locally stored settings were reset, but that
-                        didn't solve the issue with loading the
-                        settings. If there's a newer version of the
-                        manager available, try installing it.
+                        重置了本地存储的设置，但这并没有解决加载设置的问题。如果有更新版本的管理器，请尝试安装。
                     </p>
                 </div>
             </div>

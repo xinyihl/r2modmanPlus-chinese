@@ -2,15 +2,14 @@
     <div class="config-editor-selection-body">
         <div class="non-flex-content">
             <Hero
-                title="Config editor"
-                subtitle="Select a configuration file to edit"
+                title="配置编辑器"
+                subtitle="选择配置文件然后编辑"
                 hero-type="primary"
             />
             <div class="notification is-warning is-square">
                 <div class="container">
                     <p>
-                        Configuration files are generated after launching the game, with the mod installed, at least
-                        once.
+                        配置文件是在至少安装了一次 MOD 并且启动游戏后生成的。
                     </p>
                 </div>
             </div>
@@ -18,19 +17,19 @@
                 <div class='no-padding-left card-header-title'>
 
                     <div class="input-group input-group--flex margin-right">
-                        <label for="config-search" class="non-selectable">Search</label>
+                        <label for="config-search" class="non-selectable">搜索</label>
                         <input
                             v-model="filterText"
                             id="config-search"
                             class="input margin-right"
                             type="text"
-                            placeholder="Search for config files"
+                            placeholder="配置文件..."
                             autocomplete="off"
                         />
                     </div>
 
                     <div class="input-group margin-right">
-                        <label for="config-sort-order" class="non-selectable">Sort</label>
+                        <label for="config-sort-order" class="non-selectable">排序方式</label>
                         <select id="config-sort-order"
                                 class="select select--content-spacing margin-right margin-right--half-width"
                                 v-model="sortOrder">
@@ -59,9 +58,9 @@
                     <template v-slot:title>
                         <span>{{ file.getName() }}</span>
                     </template>
-                    <a class='card-footer-item' @click="editConfig(file)">Edit Config</a>
-                    <a class='card-footer-item' @click="openConfig(file)">Open File</a>
-                    <a class='card-footer-item' @click="deleteConfig(file)">Delete</a>
+                    <a class='card-footer-item' @click="editConfig(file)">编辑配置</a>
+                    <a class='card-footer-item' @click="openConfig(file)">打开文件</a>
+                    <a class='card-footer-item' @click="deleteConfig(file)">删除</a>
                 </ExpandableCard>
             </div>
         </div>
@@ -70,7 +69,7 @@
                 <div class="fa-3x">
                     <i class="fas fa-circle-notch fa-spin"></i>
                 </div>
-                <p>Looking for config files</p>
+                <p>寻找配置文件</p>
             </div>
         </div>
     </div>

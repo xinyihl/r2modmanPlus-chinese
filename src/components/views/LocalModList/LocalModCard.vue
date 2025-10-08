@@ -193,13 +193,13 @@ function dependencyStringToModName(x: string) {
             <span class="non-selectable">
                 <span v-if="isDeprecated"
                     class="tag is-danger margin-right margin-right--half-width"
-                    v-tooltip.right="'This mod is deprecated and could be broken'">
-                    Deprecated
+                    v-tooltip.right="'这个 mod 被弃用了，可能无法使用'">
+                    已弃用
                 </span>
                 <span v-if="!mod.isEnabled()"
                     class="tag is-warning margin-right margin-right--half-width"
-                    v-tooltip.right="'This mod will not be used in-game'">
-                    Disabled
+                    v-tooltip.right="'此 mod 不会在游戏中使用'">
+                    已禁用
                 </span>
                 <span class="card-title selectable">
                     <component :is="mod.isEnabled() ? 'span' : 'strike'" class="selectable">
@@ -216,7 +216,7 @@ function dependencyStringToModName(x: string) {
         </template>
 
         <template v-slot:description>
-            <p class='card-timestamp' v-if="mod.getInstalledAtTime() !== 0"><strong>Installed on:</strong> {{ getReadableDate(mod.getInstalledAtTime()) }}</p>
+            <p class='card-timestamp' v-if="mod.getInstalledAtTime() !== 0"><strong>安装于:</strong> {{ getReadableDate(mod.getInstalledAtTime()) }}</p>
         </template>
 
         <!-- Show icon button row even when card is collapsed -->
@@ -225,11 +225,11 @@ function dependencyStringToModName(x: string) {
             <span v-if="!isLatestVersion"
                 @click.prevent.stop="updateMod()"
                 class='card-header-icon'>
-                <i class='fas fa-cloud-upload-alt' v-tooltip.left="'An update is available'"></i>
+                <i class='fas fa-cloud-upload-alt' v-tooltip.left="'有更新可用'"></i>
             </span>
             <span v-if="disabledDependencies.length || missingDependencies.length"
                 class='card-header-icon'>
-                <i v-tooltip.left="`There is an issue with the dependencies for this mod`"
+                <i v-tooltip.left="`此模组的依赖关系存在问题`"
                     class='fas fa-exclamation-circle'
                 ></i>
             </span>
@@ -242,46 +242,46 @@ function dependencyStringToModName(x: string) {
                         :class="['switch', 'is-small', {'switch is-info' : mod.isEnabled()}]"
                         :checked="mod.isEnabled()" />
                     <label :for="`switch-${mod.getName()}`"
-                        v-tooltip.left="mod.isEnabled() ? 'Disable' : 'Enable'"></label>
+                        v-tooltip.left="mod.isEnabled() ? '禁用' : '启用'"></label>
                 </div>
             </span>
         </template>
 
         <!-- Show bottom button row -->
         <a @click="uninstallMod()" class='card-footer-item'>
-            Uninstall
+            卸载
         </a>
 
         <a v-if="canBeDisabled && mod.isEnabled()" @click="disableMod()" class='card-footer-item'>
-            Disable
+            禁用
         </a>
         <a v-else-if="canBeDisabled && !mod.isEnabled()" @click="enableMod(mod)" class='card-footer-item' >
-            Enable
+            启用
         </a>
 
         <a @click="viewAssociatedMods()" class='card-footer-item'>
-            Associated
+            相关
         </a>
 
         <ExternalLink :url="mod.getWebsiteUrl()" class="card-footer-item">
-            Website
+            网站
             <i class="fas fa-external-link-alt margin-left margin-left--half-width"></i>
         </ExternalLink>
 
         <a v-if="!isLatestVersion" @click="updateMod()" class='card-footer-item'>
-            Update
+            更新
         </a>
 
         <a v-if="missingDependencies.length"
             @click="downloadDependency(missingDependencies[0])"
             class='card-footer-item'>
-            Download dependency
+            下载依赖
         </a>
 
         <a v-if="disabledDependencies.length"
             @click="enableMod(disabledDependencies[0])"
             class='card-footer-item'>
-            Enable {{disabledDependencies[0].getDisplayName()}}
+            启用 {{disabledDependencies[0].getDisplayName()}}
         </a>
 
         <DonateButton :mod="tsMod"/>

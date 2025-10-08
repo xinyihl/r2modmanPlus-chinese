@@ -14,12 +14,12 @@
                         <slot name='other-icons'></slot>
                         <!-- Allow movement of mod order -->
                         <a v-if='showSort' class='card-header-icon handle'>
-                            <i class="fas fa-grip-vertical" v-tooltip.left="'Drag to reorder'"></i>
+                            <i class="fas fa-grip-vertical" v-tooltip.left="'拖动重新排序'"></i>
                         </a>
                         <a class='card-header-icon'>
                             <span class='icon'>
-                                <i class='fas fa-angle-right' aria-hidden='true' v-if='!visible' v-tooltip.left="'Expand'"></i>
-                                <i class='fas fa-angle-down' aria-hidden='true' v-if='visible' v-tooltip.left="'Collapse'"></i>
+                                <i class='fas fa-angle-right' aria-hidden='true' v-if='!visible' v-tooltip.left="'扩展'"></i>
+                                <i class='fas fa-angle-down' aria-hidden='true' v-if='visible' v-tooltip.left="'折叠'"></i>
                             </span>
                         </a>
                     </header>

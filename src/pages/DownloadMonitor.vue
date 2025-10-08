@@ -1,13 +1,13 @@
 <template>
     <div id="download-monitor-view">
-        <Hero title="Downloads" subtitle="Monitor progress of downloads" hero-type="primary"/>
+        <Hero title="下载" subtitle="监控下载进度" hero-type="primary"/>
         <template v-if="store.state.download.allDownloads.length === 0">
             <div class='text-center top'>
                 <div class="margin-right">
                     <br/>
-                    <h3 class='title is-4'>You don't have anything downloading.</h3>
+                    <h3 class='title is-4'>你没有任何下载任务。</h3>
                     <h4 class='subtitle is-5'>
-                        Click <router-link :to="{name: 'manager.online'}">here</router-link> to download something.
+                        点击 <router-link :to="{name: 'manager.online'}">这里</router-link> 下载去一些东西。
                     </h4>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     class="button ghost"
                     @click="store.commit('download/removeAllInactive')"
                 >
-                    <i class="fas fa-times mr-2" />Clear finished
+                    <i class="fas fa-times mr-2" />清除所有已完成项目
                 </button>
             </div>
             <div v-for="(downloadObject, index) of store.getters['download/profileDownloadsNewestFirst']" :key="`download-progress-${index}`">
@@ -31,7 +31,7 @@
                                 <div class="col">
                                     <p>
                                         <i class="fas fa-exclamation-triangle" />
-                                        Download failed
+                                        下载失败
                                     </p>
                                     <Progress
                                         :max='100'
@@ -45,7 +45,7 @@
                                 <div class="col">
                                     <p>
                                         <i class="fas fa-check" />
-                                        Download complete
+                                        下载完成
                                     </p>
                                     <Progress
                                         :max='100'
@@ -60,11 +60,11 @@
                                 <div class="col">
                                     <p v-if="downloadObject.status === DownloadStatusEnum.DOWNLOADING">
                                         <i class="fas fa-download" />
-                                        Downloading: {{ downloadObject.modName }}
+                                        下载中: {{ downloadObject.modName }}
                                     </p>
                                     <p v-else>
                                         <i class="fas fa-box-open" />
-                                        Extracting: {{ downloadObject.modName }}
+                                        提取中: {{ downloadObject.modName }}
                                     </p>
                                     <p>
                                         {{downloadObject.downloadProgress}}% of
@@ -80,9 +80,9 @@
                                 <div class="col">
                                     <p>
                                         <i class="fas fa-cog" />
-                                        Installing:
+                                        安装中:
                                     </p>
-                                    <p>Waiting for download to finish</p>
+                                    <p>等待下载完成</p>
                                     <Progress
                                         :max='100'
                                         :value='0'
@@ -95,7 +95,7 @@
                                 <div class="col">
                                     <p>
                                         <i class="fas fa-check" />
-                                        Download complete
+                                        下载完成
                                     </p>
                                     <p>100% of {{FileUtils.humanReadableSize(downloadObject.totalDownloadSize)}}</p>
                                     <Progress :max='100' :value='100' :className="['is-success']" />
@@ -103,9 +103,9 @@
                                 <div class="col">
                                     <p>
                                         <i class="fas fa-cog" spin />
-                                        Installing: {{ downloadObject.modName }}
+                                        安装中: {{ downloadObject.modName }}
                                     </p>
-                                    <p>{{Math.min(Math.floor(downloadObject.installProgress), 100)}}% complete</p>
+                                    <p>{{Math.min(Math.floor(downloadObject.installProgress), 100)}}% 已完成</p>
                                     <Progress
                                         :max='100'
                                         :value='downloadObject.installProgress'
@@ -118,7 +118,7 @@
                         <button
                             v-if="downloadObject.status === DownloadStatusEnum.FAILED"
                             class="button download-item-action-button"
-                            v-tooltip.left="'Retry'"
+                            v-tooltip.left="'重试'"
                             @click="store.dispatch('download/retryDownload', { download: downloadObject, hideModal: true })"
                         >
                             <i class="fas fa-redo redo-icon" />
@@ -126,7 +126,7 @@
                         <button
                             v-if="downloadObject.status === DownloadStatusEnum.FAILED || downloadObject.status === DownloadStatusEnum.INSTALLED"
                             class="button download-item-action-button"
-                            v-tooltip.left="'Remove'"
+                            v-tooltip.left="'移除'"
                             @click="store.commit('download/removeDownload', downloadObject)"
                         >
                             <i class="fas fa-times x-icon" />

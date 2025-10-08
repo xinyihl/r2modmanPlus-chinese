@@ -1,54 +1,52 @@
 <template>
     <div id="help-view">
-        <Hero title="Help" subtitle="Common problems and their potential solutions" hero-type="primary"/>
+        <Hero title="帮助" subtitle="常见问题及其潜在解决方案" hero-type="primary"/>
         <div
             class="tabs sticky-top sticky-top--opaque sticky-top--no-shadow sticky-top--no-padding has-background-">
             <ul>
                 <li v-for="(key, index) in tabs" :key="`tab-${key}`"
                     :class="[{'is-active': activeTab === key}]"
                     @click="changeTab(key)">
-                    <a>{{key}}</a>
+                    <a>{{tabsI[index]}}</a>
                 </li>
             </ul>
         </div>
         <div class="margin-right">
             <br/>
             <div ref="General" v-if="activeTab === 'General'">
-                <h2 class="title is-5">Getting started with installing mods</h2>
+                <h2 class="title is-5">开始安装模组</h2>
                 <p>
-                    Go to the "Online" tab, find a mod, and hit download.
-                    It'll also download the dependencies saving you time.
+                    转到 “在线” 选项卡，找到一个模组，然后点击下载。
+                    它还会自动下载前置模组，节省你的时间。
                 </p>
-                <p>Once you've installed the mods you'd like, just click <strong>Start modded</strong> in the top left.</p>
+                <p>安装完你想要的模组后，只需点击左上角的<strong>启动模组</strong>。</p>
                 <hr/>
-                <h2 class='title is-5'>Slow game with mods / stuttering?</h2>
+                <h2 class='title is-5'>游戏运行缓慢或卡顿？</h2>
                 <p>
-                    This is likely due to a mod throwing errors.
-                    One solution is to attempt to disable half of your mods and check to see if the issue persists.
+                    这可能是由于某个模组抛出错误导致的。
+                    一个解决方案是尝试禁用一半的模组，然后检查问题是否仍然存在。
                     <br/>
-                    If the issue still remains then disable another half. Continue doing this until the issue is
-                    solved.
+                    如果问题仍然存在，再禁用另一半。继续这样做，直到问题解决。
                     <br/><br/>
-                    In the case of stuttering there may be optimization mods to help with this.
+                    如果是卡顿问题，可能会有一些优化模组可以帮助解决。
                 </p>
                 <hr/>
-                <h2 class='title is-5'>Dedicated servers</h2>
+                   <h2 class='title is-5'>专用服务器</h2>
                 <p>
-                    Dedicated servers aren't directly supported through the manager however a solution is to instead
-                    copy the contents of your profile folder into your dedicated server folder yourself.
+                    管理器不直接支持专用服务器，但你可以手动将配置文件的内容复制到专用服务器文件夹中。
                 </p>
                 <hr/>
-                <h2 class='title is-5'>Launching the game from outside the mod manager</h2>
+                <h2 class='title is-5'>从模组管理器外部启动游戏</h2>
                 <p>
-                    By design your experience by starting the game through Steam will be vanilla (un-modded).
+                    默认情况下，通过 Steam 启动游戏时，游戏将是原版（未安装模组）。
                     <br/><br/>
-                    You will need to place the corresponding argument in your platform's relevant launch parameter area.
+                    你需要在平台的相应启动参数区域中放置相应的参数。
                     <br/>
-                    For Steam, this would be located in the game's properties.
+                    对于 Steam 这可以在游戏的属性中找到。
                     <br/><br/>
-                    Your current argument would be:
+                    你当前的参数是：
                     <code v-if="launchArgs.length > 0">{{ launchArgs }}</code>
-                    <code v-else>These parameters will be available after installing BepInEx.</code>
+                    <code v-else>这些参数将在安装 BepInEx 后可用。</code>
                     <br/>
                 </p>
                 <br/>
@@ -56,43 +54,42 @@
                     <p>
                         <button class="button" @click="copyLaunchArgsToClipboard" v-if="!copyingDoorstopText">
                             <i class="fas fa-clipboard"></i>
-                            <span class="margin-left--half-width smaller-font">Copy launch arguments</span>
+                            <span class="margin-left--half-width smaller-font">复制启动参数</span>
                         </button>
-                        <button class="button is-loading" v-else>Copy launch arguments</button>
+                        <button class="button is-loading" v-else>复制启动参数</button>
                     </p>
                     <br/>
                 </template>
             </div>
             <div ref="Game won't start" v-if="activeTab === `Game won't start`">
-                <h2 class='title is-5'>A red box appears when I try to start the game</h2>
-                <p>Read the suggestion at the bottom of the red box.</p>
+                <h2 class='title is-5'>当我尝试启动游戏时出现红色框</h2>
+                <p>请阅读红色框底部的建议。</p>
                 <hr/>
-                <h2 class='title is-5'>I'm taken to the Steam store page</h2>
-                <p>That's because you don't legally own the game. The manager only supports legal copies.</p>
+                <h2 class='title is-5'>我被带到了 Steam 商店页面</h2>
+                <p>这是因为你没有合法拥有该游戏。管理器仅支持合法副本。</p>
                 <hr/>
-                <h2 class='title is-5'>A text window appears and closes immediately.</h2>
-                <p>Try running "Reset {{store.state.activeGame.displayName}} installation" on the Settings screen.</p>
-                <p>If it persists, force exit Steam and start modded with Steam closed.</p>
+                <h2 class='title is-5'>出现一个文本窗口并立即关闭</h2>
+                <p>尝试在设置屏幕上运行 “重置 {{store.state.activeGame.displayName}} 安装”。</p>
+                <p>如果问题仍然存在，强制退出 Steam 并在关闭 Steam 的情况下启动模组。</p>
             </div>
             <div ref="Mods not appearing" v-if="activeTab === 'Mods not appearing'">
-                <h2 class='title is-5'>Potential solutions</h2>
-                <p>The most common issues are solved by following the instructions exactly as listed
+                <h2 class='title is-5'>可能的解决方案</h2>
+                <p>最常见的问题可以通过严格按照以下说明解决：
                     <ExternalLink url="https://github.com/ebkr/r2modmanPlus/wiki/Why-aren't-my-mods-working%3F">
-                        here
+                        链接
                     </ExternalLink>
                 </p>
             </div>
             <div ref="Updating" v-if="activeTab === 'Updating'">
-                <h2 class='title is-5'>Auto-updates</h2>
-                <p>The manager updates automatically on close assuming an update is available.</p>
-                <p>Updates are downloaded in the background.</p>
-                <p>You may receive a prompt to run <i>old_uninstaller</i> as an admin. This is the updater.</p>
-                <p>If a problem occurs with an update, download and run the latest installer.</p>
+                <h2 class='title is-5'>自动更新</h2>
+                <p>如果有更新可用，管理器会在关闭时自动更新。</p>
+                <p>更新会在后台下载。</p>
+                <p>你可能会收到一个提示，要求以管理员身份运行 <i>old_uninstaller</i> 这是更新程序。</p>
+                <p>如果更新出现问题，请下载并运行最新的安装程序。</p>
                 <hr/>
-                <h2 class='title is-5'>I don't want updates</h2>
+                <h2 class='title is-5'>我不想要更新</h2>
                 <p>
-                    On GitHub there is a portable version that doesn't auto update. You are however prompted that an
-                    update is available.
+                    在 GitHub 上有一个便携版本，不会自动更新。但你仍然会收到更新提示。
                 </p>
             </div>
         </div>
@@ -116,6 +113,7 @@ const store = getStore<State>();
 
 const activeTab = ref('General');
 const tabs = ref(['General', 'Game won\'t start', 'Mods not appearing', 'Updating']);
+const tabsI = ['一般的', '游戏没有启动', '模组未加载', '更新'];
 const doorstopTarget = ref("");
 const copyingDoorstopText = ref(false);
 const launchArgs = ref("");

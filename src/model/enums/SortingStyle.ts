@@ -1,7 +1,7 @@
 export default {
-    DEFAULT: 'Default',
-    LAST_UPDATED: 'Last updated',
-    ALPHABETICAL: 'Alphabetical',
-    DOWNLOADS: 'Download count',
-    RATING: 'Rating',
+    DEFAULT: '默认',
+    LAST_UPDATED: '最后更新时间',
+    ALPHABETICAL: '字母顺序',
+    DOWNLOADS: '下载数',
+    RATING: '评分',
 };

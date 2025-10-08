@@ -2,22 +2,22 @@
     <div>
         <ModalCard id="import-mod-from-file-modal" :can-close="true" @close-modal="closeModal" :is-active="isOpen">
             <template v-slot:header>
-                <h2 class='modal-title'>Import mod from file</h2>
+                <h2 class='modal-title'>从文件导入模组</h2>
             </template>
             <template v-slot:footer v-if="fileToImport === null">
-                <button class="button is-info" @click="selectFile">Select file</button>
+                <button class="button is-info" @click="selectFile">选择文件</button>
             </template>
             <template v-slot:footer v-else>
-                <button class="button is-info" @click="importFile">Import local mod</button>
+                <button class="button is-info" @click="importFile">导入本地模组</button>
             </template>
 
             <template slot="body" v-if="fileToImport === null">
                 <template v-if="!waitingForSelection">
-                    <p>Please select a zip or DLL to be imported.</p>
-                    <p>Zip files that contain a manifest file will have the some information pre-filled. If a manifest is not available, this will have to be entered manually.</p>
+                    <p>请选择要导入的 zip 或 DLL 文件。</p>
+                    <p>包含清单文件的 zip 文件将自动预填充部分信息。如果未提供清单文件，则需手动输入相关信息。</p>
                 </template>
                 <template v-else>
-                    <p>Waiting for file. This may take a minute.</p>
+                    <p>正在等待文件，这可能需要一点时间。</p>
                 </template>
             </template>
 
@@ -26,57 +26,57 @@
                     <p>{{ validationMessage }}</p>
                 </div>
                 <div class="input-group input-group--flex margin-right">
-                    <label for="mod-name" class="non-selectable">Mod name</label>
+                    <label for="mod-name" class="non-selectable">模组名</label>
                     <input
                         v-model="modName"
                         id="mod-name"
                         class="input margin-right"
                         ref="mod-name"
                         type="text"
-                        placeholder="Enter the name of the mod"
+                        placeholder="模组名..."
                         autocomplete="off"
                     />
                 </div>
                 <br/>
                 <div class="input-group input-group--flex margin-right">
-                    <label for="mod-author" class="non-selectable">Author</label>
+                    <label for="mod-author" class="non-selectable">作者</label>
                     <input
                         v-model="modAuthor"
                         id="mod-author"
                         class="input margin-right"
                         ref="mod-author"
                         type="text"
-                        placeholder="Enter the author name"
+                        placeholder="作者..."
                         autocomplete="off"
                     />
                 </div>
                 <br/>
                 <div class="input-group input-group--flex margin-right">
-                    <label for="mod-author" class="non-selectable">Description (optional)</label>
+                    <label for="mod-author" class="non-selectable">介绍 (可选)</label>
                     <input
                         v-model="modDescription"
                         id="mod-description"
                         class="input margin-right"
                         ref="mod-description"
                         type="text"
-                        placeholder="Enter a description"
+                        placeholder="介绍..."
                         autocomplete="off"
                     />
                 </div>
                 <hr/>
-                <h3 class="title is-6">Version</h3>
+                <h3 class="title is-6">版本</h3>
                 <div class="input-group input-group--flex margin-right non-selectable">
                     <div class="is-flex">
                         <div class="margin-right margin-right--half-width">
-                            <label for="mod-version-major">Major</label>
+                            <label for="mod-version-major">主要</label>
                             <input id="mod-version-major" ref="mod-version" class="input margin-right" type="number" v-model="modVersionMajor" min="0" step="1" placeholder="0"/>
                         </div>
                         <div class="margin-right margin-right--half-width">
-                            <label for="mod-version-minor">Minor</label>
+                            <label for="mod-version-minor">次要</label>
                             <input id="mod-version-minor" ref="mod-version" class="input margin-right" type="number" v-model="modVersionMinor" min="0" step="1" placeholder="0"/>
                         </div>
                         <div>
-                            <label for="mod-version-patch">Patch</label>
+                            <label for="mod-version-patch">补丁</label>
                             <input id="mod-version-patch" ref="mod-version" class="input margin-right" type="number" v-model="modVersionPatch" min="0" step="1" placeholder="0"/>
                         </div>
                     </div>

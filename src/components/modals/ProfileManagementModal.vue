@@ -52,39 +52,39 @@ async function importLocalMod() {
 <template>
     <ModalCard id="profile-management-modal" :can-close="true" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class='modal-title non-selectable'>Profile</h2>
+            <h2 class='modal-title non-selectable'>播放集</h2>
         </template>
         <template v-slot:body>
             <SettingsItem
-                action="Change profile"
-                description="Return to the profile selection screen"
+                action="切换播放集"
+                description="返回到播放集选择界面"
                 icon="fa-file-import"
                 :value="async () => undefined"
                 @click="changeProfile" />
             <SettingsItem
-                action="Export profile as a file"
-                description="Export your mod list and configs as a file"
+                action="导出播放集为文件"
+                description="将你的模组列表和配置导出为一个文件"
                 icon="fa-file-alt"
                 :value="async () => undefined"
                 @click="exportProfileAsFile"
             />
             <SettingsItem
-                action="Export profile as code"
-                description="Export your mod list and configs as a code"
+                action="导出播放集为分享码"
+                description="将你的模组列表和配置导出为分享码"
                 icon="fa-cloud-upload-alt"
                 :value="async () => undefined"
                 @click="exportProfileAsCode"
             />
             <SettingsItem
-                action="Import local mod"
-                description="Install a mod offline from your files"
+                action="导入本地模组"
+                description="从你的文件中离线安装模组"
                 icon="fa-file-import"
-                :value="async () => 'Not all mods can be installed locally'"
+                :value="async () => '并非所有模组都能本地安装'"
                 @click="importLocalMod"
             />
         </template>
         <template v-slot:footer>
-            <button class="button is-info" @click="closeModal">Close</button>
+            <button class="button is-info" @click="closeModal">关闭</button>
         </template>
     </ModalCard>
 </template>

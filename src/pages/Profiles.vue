@@ -6,8 +6,8 @@
     <ImportProfileModal />
     <!-- Content -->
     <hero
-      title="Profile selection"
-      subtitle="Profiles help to organise mods easily"
+      title="选择播放集"
+      subtitle="播放集可以轻松组织模组"
       heroType="primary"
     />
     <div class="columns">
@@ -19,7 +19,7 @@
                 <div class='notification'>
                     <div class="container">
                         <i class='fas fa-long-arrow-alt-left margin-right' />
-                        <strong><a @click="backToGameSelection">Back to game selection</a></strong>
+                        <strong><a @click="backToGameSelection">回到游戏选择界面</a></strong>
                     </div>
                 </div>
                 <div v-for="(profileName) of profileList" :key="profileName">
@@ -39,20 +39,20 @@
                 <div class="container">
                   <nav class="level">
                     <div class="level-item">
-                      <a id="select-profile" class="button is-info" @click="moveToNextScreen()">Select profile</a>
+                      <a id="select-profile" class="button is-info" @click="moveToNextScreen()">选择播放集</a>
                     </div>
                       <div class="level-item">
-                          <a id="rename-profile-disabled" class="button" v-if="activeProfileName === 'Default'" :disabled="true">Rename</a>
-                          <a id="rename-profile" class="button" @click="openRenameProfileModal()" v-else>Rename</a>
+                          <a id="rename-profile-disabled" class="button" v-if="activeProfileName === 'Default'" :disabled="true">重命名</a>
+                          <a id="rename-profile" class="button" @click="openRenameProfileModal()" v-else>重命名</a>
                       </div>
                     <div class="level-item">
-                      <a id="create-profile" class="button" @click="openCreateProfileModal()">Create new</a>
+                      <a id="create-profile" class="button" @click="openCreateProfileModal()">新建</a>
                     </div>
                     <div class="level-item">
-                      <a class="button" @click="openImportProfileModal()">Import / Update</a>
+                      <a class="button" @click="openImportProfileModal()">导入/更新</a>
                     </div>
                     <div class="level-item">
-                        <a class="button is-danger" @click="openDeleteProfileModal()">Delete</a>
+                        <a class="button is-danger" @click="openDeleteProfileModal()">删除</a>
                     </div>
                   </nav>
                 </div>

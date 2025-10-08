@@ -26,28 +26,28 @@ function closeModal() {
                 <div class='notification is-info'>
 
                     <h3 v-if="DownloadUtils.statusIsDownloadOrExtract(store.getters['download/currentDownload'].status)" class='title'>
-                        Downloading {{store.getters['download/currentDownload'].modName}}
+                        下载中 {{store.getters['download/currentDownload'].modName}}
                     </h3>
                     <h3 v-else-if="store.getters['download/currentDownload'].status === DownloadStatusEnum.INSTALLING" class='title'>
-                        Installing {{store.getters['download/currentDownload'].modName}}
+                        安装中 {{store.getters['download/currentDownload'].modName}}
                     </h3>
 
 
                     <p v-if="store.getters['download/currentDownload'].status === DownloadStatusEnum.DOWNLOADING">
                         <i class="fas fa-download"/>
-                        Downloading: {{store.getters['download/currentDownload'].downloadProgress}}% of
+                        下载中: {{store.getters['download/currentDownload'].downloadProgress}}% of
                         {{FileUtils.humanReadableSize(store.getters['download/currentDownload'].totalDownloadSize)}}
                     </p>
 
                     <p v-else-if="store.getters['download/currentDownload'].status === DownloadStatusEnum.EXTRACTING || store.getters['download/currentDownload'].status === DownloadStatusEnum.EXTRACTED">
                         <i class="fas fa-box-open"/>
-                        Extracting: {{store.getters['download/currentDownload'].downloadProgress}}% of
+                        提取中: {{store.getters['download/currentDownload'].downloadProgress}}% of
                         {{FileUtils.humanReadableSize(store.getters['download/currentDownload'].totalDownloadSize)}}
                     </p>
 
                     <p v-else>
                         <i class="fas fa-check"/>
-                        Download complete
+                        下载完成
                     </p>
 
                     <Progress
@@ -58,11 +58,11 @@ function closeModal() {
 
                     <p v-if="store.getters['download/currentDownload'].installProgress">
                         <i class="fas fa-cog" spin />
-                        Installing: {{store.getters['download/currentDownload'].installProgress}}%
+                        安装中: {{store.getters['download/currentDownload'].installProgress}}%
                     </p>
                     <p v-else>
                         <i class="fas fa-cog" />
-                        Installing: waiting for download to finish
+                        安装中: 等待下载完成
                     </p>
 
                     <Progress

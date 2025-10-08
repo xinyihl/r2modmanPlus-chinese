@@ -2,7 +2,7 @@
     <div>
         <hero :title=heroTitle :subtitle='splashText' :heroType=heroType />
         <div class='notification is-warning'>
-            <p>Game updates may break mods. If a new update has been released, please be patient.</p>
+            <p>游戏更新可能会破坏模组。如果发布了新的更新，请耐心等待。</p>
         </div>
         <Progress
             :max='store.state.splash.requests.length * 100'
@@ -11,10 +11,10 @@
         <div class='columns'>
             <div class='column is-one-quarter'>
                 <aside class='menu'>
-                    <p class='menu-label'>Help</p>
+                    <p class='menu-label'>帮助</p>
                     <ul class='menu-list'>
-                        <li><a @click="view = 'about'" :class="[view === 'about' ? 'is-active' : '']">About</a></li>
-                        <li><a @click="view = 'faq'" :class="[view === 'faq' ? 'is-active' : '']">FAQ</a></li>
+                        <li><a @click="view = 'about'" :class="[view === 'about' ? 'is-active' : '']">关于</a></li>
+                        <li><a @click="view = 'faq'" :class="[view === 'faq' ? 'is-active' : '']">问答</a></li>
                         <li>
                             <ExternalLink url="https://github.com/ebkr/r2modmanPlus">
                                 <i class='fab fa-github fa-lg' aria-hidden='true' />
@@ -30,7 +30,7 @@
                             <div class='content'>
                                 <div class='container' v-if="view !== 'main'">
                                     <i class='fas fa-long-arrow-alt-left margin-right' />
-                                    <strong><a @click="view = 'main'">Go back</a></strong>
+                                    <strong><a @click="view = 'main'">返回</a></strong>
                                     <br /><br />
                                 </div>
                                 <div class='container' v-if="view === 'main'">
@@ -38,21 +38,21 @@
                                         <span class='icon margin-right margin-right--half-width'>
                                           <i class='fas fa-info-circle' />
                                         </span>
-                                        <strong>Did you know?</strong>
+                                        <strong>你知道吗?</strong>
                                     </p>
                                     <ul class='margin-right'>
                                         <li>
                                             <p>
-                                                You can use the "Install with Mod Manager" button on
-                                                <ExternalLink url="https://thunderstore.io">Thunderstore</ExternalLink>
-                                                with r2modman.
+                                                你可以使用
+                                                <link-component
+                                                    :url="'https://thunderstore.io'" :target="'external'">Thunderstore
+                                                </link-component>
+                                                上的 "Install with Mod Manager" 按钮转到 r2modman.
                                             </p>
                                         </li>
                                         <li>
                                             <p>
-                                                You can export the selected profile from the settings screen as either a
-                                                file, or a code.
-                                                This makes it easy to share your mod list with friends!
+                                                你可以从设置屏幕中导出所选配置文件作为文件或代码。 这使与朋友分享你的模组列表变得容易！
                                             </p>
                                         </li>
                                     </ul>
@@ -60,12 +60,10 @@
                                         <span class='icon margin-right margin-right--half-width'>
                                           <i class='fas fa-question-circle' />
                                         </span>
-                                        <strong>Having trouble?</strong>
+                                        <strong>遇到麻烦？</strong>
                                     </p>
                                     <p>
-                                        Send a screenshot of the error in the Thunderstore modding discord server. Feel
-                                        free to ping me
-                                        if it doesn't get resolved.
+                                        将错误截图发送到 Thunderstore Modding Discord 服务器。如果没有解决，请随时 ping 我。
                                     </p>
                                 </div>
                                 <div class='container' v-else-if="view === 'about'">
@@ -73,10 +71,10 @@
                                         <span class='icon margin-right margin-right--half-width'>
                                           <i class='fas fa-address-card' />
                                         </span>
-                                        <strong>About r2modman</strong>
+                                        <strong>关于 r2modman</strong>
                                     </p>
-                                    <p>It's created by Ebkr, using Quasar.</p>
-                                    <p>Quasar provides the following development tools that r2modman is built upon:</p>
+                                    <p>它由 Ebkr 使用 Quasar 创建。</p>
+                                    <p>Quasar 提供以下开发工具，r2modman 正是基于这些工具开发的：</p>
                                     <ul>
                                         <li>Electron</li>
                                         <li>Node</li>
@@ -89,21 +87,19 @@
                                         <span class='icon margin-right margin-right--half-width'>
                                           <i class='fas fa-question-circle' />
                                         </span>
-                                        <strong>FAQ</strong>
+                                        <strong>问答</strong>
                                     </p>
                                     <ul>
                                         <li>
-                                            <p><strong>How do I get started?</strong></p>
+                                            <p><strong>我如何开始？</strong></p>
                                             <p>
-                                                Head on over to the online tab, and download BepInEx and R2API.
+                                                前往“在线”选项卡，然后下载 Bepinex 和 R2API。
                                             </p>
                                         </li>
                                         <li>
-                                            <p><strong>Starting the game with mods</strong></p>
+                                            <p><strong>携带模组开始游戏</strong></p>
                                             <p>
-                                                You have to start the game from within the manager. Starting through
-                                                Steam will not work
-                                                without taking manual steps.
+                                                你必须从管理器中启动游戏。如果不进行手动操作，通过 Steam 启动是行不通的。
                                             </p>
                                         </li>
                                     </ul>

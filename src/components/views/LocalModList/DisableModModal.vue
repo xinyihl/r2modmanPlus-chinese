@@ -65,17 +65,17 @@ function onClose() {
 <template>
     <ModalCard id="disable-mod-modal" v-if="isOpen" :is-active="isOpen" :can-close="!isLocked" @close-modal="onClose">
         <template v-slot:header>
-            <h2 class="modal-title">Disabling {{mod.getName()}}</h2>
+            <h2 class="modal-title">禁用 {{mod.getName()}}</h2>
         </template>
         <template v-slot:body>
             <div class="max-height-100 is-flex is-flex-direction-column">
                 <div class='notification is-warning'>
                     <p>
-                        Other mods depend on this mod. Select <strong>Disable all</strong>
-                        to disable dependent mods, otherwise they may cause errors.
+                        其他模组依赖此模组。<br>
+                        选择<strong>禁用所有</strong>禁用所有依赖此模组的模组，否则它们可能会导致错误。
                     </p>
                 </div>
-                <h3 class="subtitle mb-3">Mods to be disabled</h3>
+                <h3 class="subtitle mb-3">将被禁用的模组</h3>
                 <div class="is-flex-shrink-1 overflow-auto code-snippet">
                     <ul class="list">
                         <li class="list-item">{{mod.getName()}}</li>
@@ -86,7 +86,7 @@ function onClose() {
                     </ul>
                 </div>
                 <div v-if="isLocked" class="mt-3">
-                    <h3 class="subtitle mb-3">Disabling {{modBeingDisabled}}</h3>
+                    <h3 class="subtitle mb-3">禁用 {{modBeingDisabled}}</h3>
                     <progress class="progress is-small is-info"/>
                 </div>
             </div>
@@ -95,12 +95,12 @@ function onClose() {
             <button class="button is-info"
                     :disabled="isLocked"
                     @click="disableModIncludingDependants">
-                Disable all (recommended)
+                禁用所有（建议）
             </button>
             <button class="button"
                     :disabled="isLocked"
                     @click="disableModExcludingDependants">
-                Disable {{mod.getName()}} only
+                仅禁用 {{mod.getName()}}
             </button>
         </template>
     </ModalCard>

@@ -3,7 +3,7 @@
         <Hero
             v-if="configFile"
             :title="configFile.getName()"
-            subtitle="Editing config file"
+            subtitle="编辑配置文件"
             hero-type="primary"
         />
         <div class="margin-top"></div>

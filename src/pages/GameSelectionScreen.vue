@@ -2,7 +2,7 @@
     <div>
         <ModalCard id="select-platform-modal" v-show="showPlatformModal" :is-active="showPlatformModal" @close-modal="() => {showPlatformModal = false;}" class="z-max z-top">
             <template v-slot:header>
-                <h2 class='modal-title'>Which store manages your game?</h2>
+                <h2 class='modal-title'>哪个平台管理你的游戏？</h2>
             </template>
             <template v-slot:body>
                 <div v-if="selectedGame !== null">
@@ -14,23 +14,23 @@
             </template>
             <template v-slot:footer>
                 <button class='button is-info' @click='selectPlatform'>
-                    Select platform
+                    选择平台
                 </button>
             </template>
         </ModalCard>
         <hero
-            :title="`${capitalize(activeTab)} selection`"
+            :title="activeTab === GameInstanceType.GAME ? '选择游戏' : '选择服务器'"
             :subtitle="
                 activeTab === GameInstanceType.GAME
-                    ? 'Which game are you managing your mods for?'
-                    : 'Which dedicated server are you managing your mods for?'
+                    ? '你正在管理哪个游戏？'
+                    : '你正在管理哪个专用服务器？'
             "
             :heroType="activeTab === GameInstanceType.GAME ? 'primary' : 'warning'"
         />
         <div class="notification is-warning is-square" v-if="runningMigration">
             <div class="container">
-                <p>An update to the manager has occurred and needs to do background work.</p>
-                <p>The options to select a game are disabled until the work has completed.</p>
+                <p>管理器已发布更新，需要进行后台工作。</p>
+                <p>工作完成之前，选择游戏的选项将被禁用。</p>
             </div>
         </div>
         <div class="columns">
@@ -46,7 +46,7 @@
                                             id="game-selection-list-search"
                                             class="input margin-right"
                                             type="text"
-                                            placeholder="Search for a game"
+                                            placeholder="搜索..."
                                             autocomplete="off"
                                         />
                                     </div>
@@ -54,11 +54,11 @@
                             </div>
                             <div class="margin-right">
                                 <button class="button is-info"
-                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectGame(selectedGame)">Select {{ activeTab.toLowerCase() }}</button>
+                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectGame(selectedGame)">选择 {{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
                             </div>
                             <div class="margin-right">
                                 <button class="button"
-                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectDefaultGame(selectedGame)">Set as default</button>
+                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectDefaultGame(selectedGame)">设置为默认值</button>
                             </div>
                             <div>
                                 <i class="button fas fa-th-large" @click="toggleViewMode"></i>
@@ -73,7 +73,7 @@
                                             id="game-selection-cards-search"
                                             class="input margin-right"
                                             type="text"
-                                            placeholder="Search for a game"
+                                            placeholder="搜索..."
                                             autocomplete="off"
                                         />
                                     </div>
@@ -89,7 +89,7 @@
                                     <ul class="text-center">
                                         <li v-for="(value) in GameInstanceType" :key="`tab-${value}`"
                                             :class="[{'is-active': activeTab === value}]">
-                                            <a @click="changeTab(value)">{{capitalize(value)}}</a>
+                                            <a @click="changeTab(value)">{{value === GameInstanceType.GAME ? '游戏' : value === GameInstanceType.SERVER ?  '服务器' : '未知'}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -141,10 +141,10 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="absolute-center text-center">
-                                                                    <button class="button is-info" @click="selectGame(game)" :class="[{'is-disabled': selectedGame === null}]">Select
-                                                                        {{ activeTab.toLowerCase() }}</button>
+                                                                    <button class="button is-info" @click="selectGame(game)" :class="[{'is-disabled': selectedGame === null}]">选择此
+                                                                        {{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
                                                                     <br/><br/>
-                                                                    <button class="button" @click="selectDefaultGame(game)">Set as default</button>
+                                                                    <button class="button" @click="selectDefaultGame(game)">设置为默认值</button>
                                                                 </div>
                                                             </div>
                                                         </div>

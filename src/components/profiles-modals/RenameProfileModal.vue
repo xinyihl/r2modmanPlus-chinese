@@ -60,10 +60,10 @@ async function performRename() {
     <ModalCard id="rename-profile-modal" v-if="isOpen" :is-active="isOpen" @close-modal="closeModal">
 
         <template v-slot:header>
-            <h2 class="modal-title">Rename a profile</h2>
+            <h2 class="modal-title">重命名播放集</h2>
         </template>
         <template v-slot:body>
-            <p>This profile will store its own mods independently from other profiles.</p>
+            <p>此播放集将独立于其他播放集存储自己的模组。</p>
 
             <input
                 v-model="newProfileName"
@@ -75,18 +75,18 @@ async function performRename() {
             />
 
             <span class="tag is-dark" v-if="newProfileName === '' || makeProfileNameSafe(newProfileName) === ''">
-                Profile name required
+                需要播放集名称
             </span>
             <span class="tag is-success" v-else-if="!doesProfileExist(newProfileName)">
-                "{{makeProfileNameSafe(newProfileName)}}" is available
+                "{{makeProfileNameSafe(newProfileName)}}" 可用
             </span>
             <span class="tag is-danger" v-else-if="doesProfileExist(newProfileName)">
-                "{{makeProfileNameSafe(newProfileName)}}" is either already in use, or contains invalid characters
+                "{{makeProfileNameSafe(newProfileName)}}" 已在使用中，或包含无效字符
             </span>
         </template>
         <template v-slot:footer>
-            <button class="button is-danger" v-if="doesProfileExist(newProfileName)" disabled>Rename</button>
-            <button class="button is-info" @click="performRename()" :disabled="renamingInProgress" v-else>Rename</button>
+            <button class="button is-danger" v-if="doesProfileExist(newProfileName)" disabled>重命名</button>
+            <button class="button is-info" @click="performRename()" :disabled="renamingInProgress" v-else>重命名</button>
         </template>
 
     </ModalCard>

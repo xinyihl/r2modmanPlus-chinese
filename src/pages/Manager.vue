@@ -3,9 +3,9 @@
 		<div class='notification is-warning' v-if="portableUpdateAvailable">
 			<div class='container'>
 				<p>
-					An update is available.
+					有更新可用。
 					<ExternalLink :url="`https://github.com/ebkr/r2modmanPlus/releases/tag/${updateTagName}`">
-                        Click here to go to the release page.
+                        单击此处转到发布页面。
 					</ExternalLink>
 				</p>
 			</div>
@@ -14,9 +14,9 @@
 			<div class="modal-background" @click="showSteamIncorrectDirectoryModal = false"></div>
 			<div class='modal-content'>
 				<div class='notification is-danger'>
-					<h3 class='title'>Failed to set the Steam folder</h3>
-					<p>The steam executable was not selected.</p>
-					<p>If this error has appeared but the executable is correct, please run as administrator.</p>
+					<h3 class='title'>无法设置 Steam 文件夹</h3>
+					<p>未选择 Steam 可执行文件。</p>
+					<p>如果出现此错误，但可执行文件是正确的，请以管理员的身份运行。</p>
 				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close"
@@ -26,9 +26,9 @@
 			<div class="modal-background" @click="showRor2IncorrectDirectoryModal = false"></div>
 			<div class='modal-content'>
 				<div class='notification is-danger'>
-					<h3 class='title'>Failed to set the {{ activeGame.displayName }} folder</h3>
-					<p>The executable must be either of the following: "{{ activeGame.exeName.join('", "') }}".</p>
-					<p>If this error has appeared but the executable is correct, please run as administrator.</p>
+					<h3 class='title'>无法设置 {{ activeGame.displayName }} 文件夹</h3>
+					<p>可执行文件必须是以下路径： "{{ activeGame.exeName.join('", "') }}".</p>
+					<p>如果出现此错误，但可执行文件是正确的，请以管理员的身份运行。</p>
 				</div>
 			</div>
 			<button class="modal-close is-large" aria-label="close"
@@ -36,34 +36,32 @@
 		</div>
 		<ModalCard id="steam-installation-validation-modal" :is-active="isValidatingSteamInstallation" @close-modal="closeSteamInstallationValidationModal" :can-close="true">
 			<template v-slot:header>
-				<h2 class='modal-title'>Clearing the {{activeGame.displayName}} installation directory</h2>
+				<h2 class='modal-title'>清除 {{activeGame.displayName}} 安装目录</h2>
 			</template>
 			<template v-slot:body>
 				<div class='notification is-warning'>
 					<p>
-						You will not not be able to launch the game until
-						Steam has verified the integrity of the game files.
+						你将无法启动游戏直到 Steam 已验证了游戏文件的完整性。
 					</p>
 				</div>
 				<p>
-					Steam will be started and will attempt to verify the
-					integrity of {{ activeGame.displayName }}.
+                    Steam 将启动，并将尝试验证 {{ activeGame.displayName }} 的完整性.
 				</p>
 				<br/>
 				<p>
-					Please check the Steam window for validation progress.
-					If the window has not yet appeared, please be patient.
+					请检查 Steam 窗口以获取验证进度。
+					如果窗户尚未出现，请耐心等待。
 				</p>
 			</template>
 			<template v-slot:footer>
 				<button class="button is-info" @click="closeSteamInstallationValidationModal()">
-					I understand
+					我明白
 				</button>
 			</template>
 		</ModalCard>
         <ModalCard id="dependency-strings-modal" :is-active="showDependencyStrings" @close-modal="showDependencyStrings = false;" :can-close="true">
             <template v-slot:header>
-                <h2 class='modal-title'>Dependency string list</h2>
+                <h2 class='modal-title'>依赖关系字符串列表</h2>
             </template>
             <template v-slot:body>
                 <ul>
@@ -75,26 +73,26 @@
             <template v-slot:footer>
                 <button class="button is-info"
                         @click="showDependencyStrings = false;">
-                    Close
+                    关闭
                 </button>
             </template>
         </ModalCard>
 		<ModalCard id="launch-parameters-modal" :is-active="showLaunchParameterModal" @close-modal="() => {showLaunchParameterModal = false;}" :can-close="true">
 			<template v-slot:header>
-				<h2 class='modal-title'>Set custom launch parameters</h2>
+				<h2 class='modal-title'>设置自定义启动参数</h2>
 			</template>
 			<template v-slot:body>
-				<p>Some parameters are provided by default:</p>
+				<p>默认情况下提供了一些参数：</p>
 				<br/>
-				<p>Modded:
+				<p>修改：
 					<br/>
 					<code v-if="doorstopTarget.length > 0">
 						{{ doorstopTarget }}
 					</code>
-                    <code v-else>These parameters will be available after installing a mod loader.</code>
+                    <code v-else>安装模组加载器后，这些参数将可用。</code>
 				</p>
 				<br/>
-				<p>Vanilla:
+				<p>原版：
 					<br>
 					<code>
 						{{ vanillaLaunchArgs }}
@@ -102,21 +100,20 @@
 				</p>
 				<br/>
 				<p>
-					<strong>Please note that these are called against the Steam executable. Be careful when
-						entering custom launch parameters.</strong>
+					<strong>请注意，这些被称为 Steam 可执行文件。输入自定义启动参数时要小心。</strong>
 				</p>
 				<br/>
 				<input
 					v-model='launchParametersModel'
 					id='launch-parameters-modal-input'
 					class='input'
-					placeholder='Enter parameters'
+					placeholder='启动参数'
 					autocomplete='off'
 				/>
 			</template>
 			<template v-slot:footer>
 				<button class='button is-info' @click='updateLaunchParameters()'>
-					Update launch parameters
+					更新启动参数
 				</button>
 			</template>
 		</ModalCard>

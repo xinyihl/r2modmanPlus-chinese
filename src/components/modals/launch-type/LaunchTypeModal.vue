@@ -49,32 +49,30 @@ async function updateAndClose() {
 <template>
     <ModalCard id="launch-type-modal" v-show="LaunchTypeModalOpen" :is-active="LaunchTypeModalOpen" :can-close="true" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">Set launch behaviour</h2>
+            <h2 class="modal-title">设置启动行为</h2>
         </template>
         <template v-slot:body>
           <div>
               <input id="launch-type-option-auto" type="radio" name="launch-type-option" :value="LaunchType.AUTO" v-model="launchOption"/>
-              <label for="launch-type-option-auto"><span class="margin-right margin-right--half-width"/>Auto</label>
+              <label for="launch-type-option-auto"><span class="margin-right margin-right--half-width"/>自动</label>
           </div>
           <div>
               <input id="launch-type-option-native" type="radio" name="launch-type-option" :value="LaunchType.NATIVE" v-model="launchOption"/>
-              <label for="launch-type-option-native"><span class="margin-right margin-right--half-width"/>Native</label>
+              <label for="launch-type-option-native"><span class="margin-right margin-right--half-width"/>原生</label>
           </div>
           <div>
               <input id="launch-type-option-proton" type="radio" name="launch-type-option" :value="LaunchType.PROTON" v-model="launchOption"/>
               <label for="launch-type-option-proton"><span class="margin-right margin-right--half-width"/>Proton</label>
           </div>
           <p v-if="launchOption === LaunchType.AUTO" class="margin-top">
-              By selecting <strong>Auto</strong> we have determined that {{ activeGame.displayName }} will be launched under
-              <strong class="tag">{{ determinedLaunchType }}</strong>
-              mode.
+              通过选择<strong>自动</strong>，{{ activeGame.displayName }}将在<strong class="tag">{{ determinedLaunchType }}</strong>模式下启动。
           </p>
           <div v-if="determinedLaunchType === LaunchType.NATIVE && !wrapperProvided" class="margin-top">
             <p>
-              We were unable to determine if the required wrapper arguments have been set.
+              无法确定所需的参数是否已设置。
             </p>
             <p>
-              If you have not yet done this manually, please add the following launch arguments to the game's properties on Steam:
+              如果您尚未手动执行此操作，请将以下启动参数添加到 Steam 的游戏属性中：
             </p>
             <div>
               <code>
@@ -83,14 +81,14 @@ async function updateAndClose() {
             </div>
             <div class="margin-top">
               <CopyToClipboardButton :copy-value="launchArgs" id="launch-type-modal-copy-button">
-                Copy launch arguments
+                复制启动参数
               </CopyToClipboardButton>
             </div>
           </div>
         </template>
         <template v-slot:footer>
             <button id="launch-type-modal-update-button" class="button is-info" @click="updateAndClose">
-                Update
+                更新
             </button>
         </template>
     </ModalCard>

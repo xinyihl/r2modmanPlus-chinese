@@ -6,19 +6,19 @@
                     <p class="menu-label">{{ activeGame.displayName }}</p>
                     <ul class="menu-list">
                         <li>
-                            <a href="#" @click="launchGame(LaunchMode.MODDED)"><i class="fas fa-play-circle icon--margin-right"/>Start modded</a>
+                            <a href="#" @click="launchGame(LaunchMode.MODDED)"><i class="fas fa-play-circle icon--margin-right"/>带模组启动</a>
                         </li>
                         <li>
-                            <a href="#" @click="launchGame(LaunchMode.VANILLA)"><i class="far fa-play-circle icon--margin-right"/>Start vanilla</a>
+                            <a href="#" @click="launchGame(LaunchMode.VANILLA)"><i class="far fa-play-circle icon--margin-right"/>原版启动</a>
                         </li>
                     </ul>
-                    <p class="menu-label">Mods</p>
+                    <p class="menu-label">模组</p>
                     <div>
                         <ul class="menu-list">
                             <li>
                                 <router-link :to="{name: 'manager.installed'}" class="tagged-link">
                                     <i class="fas fa-folder tagged-link__icon icon--margin-right" />
-                                    <span class="tagged-link__content">Installed</span>
+                                    <span class="tagged-link__content">已安装</span>
                                     <span :class="getTagLinkClasses(['manager.installed', 'manager'])">{{localModCount}}</span>
                                 </router-link>
                             </li>
@@ -26,7 +26,7 @@
                                 <router-link :to="{name: 'manager.online'}"
                                              :class="['tagged-link', {'is-active': $route.name === 'downloads'}]">
                                     <i class="fas fa-globe tagged-link__icon icon--margin-right" />
-                                    <span class="tagged-link__content">Online</span>
+                                    <span class="tagged-link__content">在线列表</span>
 
                                     <router-link :to="{name: 'downloads'}" class="margin-right--half-width">
                                         <i class="tag fas fa-download is-primary" />
@@ -36,24 +36,24 @@
                             </li>
                         </ul>
                     </div>
-                    <p class='menu-label'>Other</p>
+                    <p class='menu-label'>其他</p>
                     <ul class='menu-list'>
                         <li>
                             <router-link :to="{name: 'config-editor'}">
                                 <i class="fas fa-edit icon--margin-right" />
-                                Config editor
+                                配置编辑器
                             </router-link>
                         </li>
                         <li>
                             <router-link :to="{name: 'manager.settings'}">
                                 <i class="fas fa-cog icon--margin-right" />
-                                Settings
+                                设置
                             </router-link>
                         </li>
                         <li>
                             <router-link :to="{name: 'help'}">
                                 <i class="fas fa-question-circle icon--margin-right" />
-                                Help
+                                帮助
                             </router-link>
                         </li>
                     </ul>
@@ -64,7 +64,7 @@
                         <img :src="ProtocolProvider.getPublicAssetUrl(`/images/game_selection/${activeGame.gameImage}`)" alt="Game icon"/>
                         <div>
                             <p>{{ profile.getProfileName() }}</p>
-                            <p class="sub-action">Profile</p>
+                            <p class="sub-action">播放集</p>
                         </div>
                     </div>
                 </div>

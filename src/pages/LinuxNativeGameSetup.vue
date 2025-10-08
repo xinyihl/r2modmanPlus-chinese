@@ -3,15 +3,15 @@
 		<Hero :title="`Getting started on ${platformName}`" subtitle="Let's configure the game properly" heroType="warning" />
 		<br/>
 		<div class="container">
-			To be able to launch {{ activeGame }} on Linux, you must first setup your Steam launch options correctly.<br/>
-			This needs to be done because of how the BepInEx injection works on Unix systems.<br/>
+			要在 Linux 上启动{{ activeGame }}，你必须首先正确设置你的 Steam 启动选项。<br/>
+            这是因为 BepInEx 在 Unix 系统上的注入方式所致。<br/>
 			<br/>
-			Please copy and paste the following to your {{ activeGame }} launch options:<br/>
+			请将以下内容复制并粘贴到你的{{ activeGame }}启动选项中：<br/>
 			<code id="copyableArgs">{{ ComputedWrapperLaunchArguments }}</code>
 			<br/>
 			<br/>
-			<a id="copy-action" class="button margin-right margin-right--half-width" @click="copy">Copy to clipboard</a>
-			<a class="button is-info" @click="acknowledge">Continue</a>
+			<a id="copy-action" class="button margin-right margin-right--half-width" @click="copy">复制到剪贴板</a>
+			<a class="button is-info" @click="acknowledge">继续</a>
 		</div>
 	</div>
 </template>

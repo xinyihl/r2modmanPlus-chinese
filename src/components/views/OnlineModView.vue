@@ -6,14 +6,14 @@
                     <div class="is-shadowless is-square">
                         <div class="no-padding-left card-header-title">
                             <div class="input-group input-group--flex margin-right">
-                                <label for="thunderstore-search-filter">Search</label>
+                                <label for="thunderstore-search-filter">搜索</label>
                                 <DeferredInput
                                     :modelValue="thunderstoreSearchFilter"
                                     @update:modelValue="$event => (thunderstoreSearchFilter = $event)"
                                     id="thunderstore-search-filter"
                                     class="input"
                                     type="text"
-                                    placeholder="Search"
+                                    placeholder="搜索..."
                                     autocomplete="off"
                                 />
                             </div>
@@ -25,7 +25,7 @@
                                         class="button"
                                         @click="store.commit('openOnlineSortModal')"
                                     >
-                                        Sort
+                                        排序
                                     </button>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                         class="button"
                                         @click="store.commit('openCategoryFilterModal')"
                                     >
-                                        Filter
+                                        过滤
                                     </button>
                                 </div>
                             </div>
@@ -57,12 +57,12 @@
                 />
                 <div class="in-mod-list" v-if="getPaginationSize() > 1">
                     <p class="notification margin-right">
-                        Use the numbers below to change page
+                        使用下面的数字更改页面
                     </p>
                 </div>
                 <div class="in-mod-list" v-else-if="getPaginationSize() === 0">
                     <p class="notification margin-right">
-                        {{thunderstoreModList.length ? "No mods matching search found": "No mods available"}}
+                        {{thunderstoreModList.length ? "找不到 mod 匹配搜索": "没有可用的 mod"}}
                     </p>
                 </div>
             </div>

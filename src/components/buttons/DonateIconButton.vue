@@ -1,7 +1,7 @@
 <template>
     <span v-if="mod && mod.getDonationLink() && extraRenderCondition" class="card-header-icon">
         <ExternalLink :url="mod.getDonationLink()" tag="span">
-            <i class="fas fa-heart" v-tooltip.left="'Donate to the mod author'"></i>
+            <i class="fas fa-heart" v-tooltip.left="'向模组作者捐款'"></i>
         </ExternalLink>
     </span>
 </template>

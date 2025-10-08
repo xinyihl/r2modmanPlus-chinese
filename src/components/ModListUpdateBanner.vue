@@ -29,20 +29,20 @@ function openErrorModal() {
                 {{ store.state.tsMods.thunderstoreModListUpdateStatus }}
             </span>
             <span v-else-if="updateError">
-                Error refreshing the mod list.
-                <a @click="openErrorModal">View error details</a>.
+                刷新模组列表错误。
+                <a @click="openErrorModal">查看错误详细信息</a>.
                 <br />
-                The manager will keep trying to refresh the mod list in the background.
+                将继续尝试在后台刷新模组列表。
             </span>
             <span v-else-if="store.getters['download/activeDownloadCount'] > 0">
-                An error occurred when refreshing the mod list from Thunderstore.<br />
-                However, the mod list can't be refreshed while the are mod downloads in progress.<br />
-                Please wait for the downloads to finish before continuing.
+                从 Thunderstore 中刷新模组列表时发生错误。<br />
+                但是，在进行下载的模组下载时，模组列表无法刷新。<br />
+                请等待下载结束，然后再继续。
             </span>
             <span v-else>
-                An error occurred when refreshing the mod list from Thunderstore.
-                Would you like to
-                <a @click="updateModList">try again now</a>?
+                从 Thunderstore 中刷新模组列表时会发生错误。
+                你是否想要
+                <a @click="updateModList">再试一次</a>
             </span>
         </div>
     </div>

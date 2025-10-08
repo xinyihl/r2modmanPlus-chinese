@@ -2,12 +2,12 @@
     <ModalCard id="download-mod-version-select-modal" :is-active="isOpen" :can-close="true" v-if="thunderstoreMod !== null" @close-modal="closeModal()">
         <template v-slot:header>
             <h2 class='modal-title' v-if="thunderstoreMod !== null">
-                Select a version of {{thunderstoreMod.getName()}} to download
+                选择一个 {{thunderstoreMod.getName()}} 的版本下载
             </h2>
         </template>
         <template v-slot:body>
-            <p>It's recommended to select the latest version of all mods.</p>
-            <p>Using outdated versions may cause problems.</p>
+            <p>建议选择最新版本的所有模组。</p>
+            <p>使用过时的版本可能会引起问题。</p>
             <br/>
             <div class="columns is-vcentered">
                 <template v-if="currentVersion !== null">
@@ -31,22 +31,22 @@
                 </div>
                 <div class="column is-narrow">
                     <span class="tag is-dark" v-if='selectedVersion === null'>
-                        You need to select a version
+                        你需要选择一个版本
                     </span>
                     <span class="tag is-success" v-else-if='recommendedVersion === selectedVersion'>
-                        {{selectedVersion}} is the recommended version
+                        {{selectedVersion}} 是推荐的版本
                     </span>
                     <span class="tag is-success" v-else-if='versionNumbers[0] === selectedVersion'>
-                        {{selectedVersion}} is the latest version
+                        {{selectedVersion}} 是最新版本
                     </span>
                     <span class="tag is-danger" v-else-if='versionNumbers[0] !== selectedVersion'>
-                        {{selectedVersion}} is an outdated version
+                        {{selectedVersion}} 是过时的版本
                     </span>
                 </div>
             </div>
         </template>
         <template v-slot:footer>
-            <button class="button is-info" @click="downloadMod">Download with dependencies</button>
+            <button class="button is-info" @click="downloadMod">下载模组和前置</button>
         </template>
     </ModalCard>
 </template>

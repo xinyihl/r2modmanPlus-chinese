@@ -288,31 +288,31 @@ function onContentOrPathNotSet() {
 <template>
     <ModalCard id="import-profile-from-file-or-code-modal" v-if="activeStep === 'FILE_CODE_SELECTION'" key="FILE_CODE_SELECTION" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title" v-if="importUpdateSelection === 'CREATE'">How are you importing a profile?</h2>
-            <h2 class="modal-title" v-if="importUpdateSelection === 'UPDATE'">How are you updating your profile?</h2>
+            <h2 class="modal-title" v-if="importUpdateSelection === 'CREATE'">您如何导入播放集？</h2>
+            <h2 class="modal-title" v-if="importUpdateSelection === 'UPDATE'">您如何更新播放集？</h2>
         </template>
         <template v-slot:footer>
             <button id="modal-import-profile-file"
                     class="button is-info"
-                    @click="onFileOrCodeSelect('FILE')">From file</button>
+                    @click="onFileOrCodeSelect('FILE')">从文件</button>
             <button id="modal-import-profile-code"
                     class="button is-primary"
-                    @click="onFileOrCodeSelect('CODE')">From code</button>
+                    @click="onFileOrCodeSelect('CODE')">从分享代码</button>
         </template>
     </ModalCard>
 
     <ModalCard id="import-profile-from-file-modal" v-else-if="activeStep === 'IMPORT_FILE'" key="IMPORT_FILE" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">Loading file</h2>
+            <h2 class="modal-title">加载文件</h2>
         </template>
         <template v-slot:footer>
-            <p>A file selection window will appear. Once a profile has been selected it may take a few moments.</p>
+            <p>将出现一个文件选择窗口。一旦选择了播放集，可能需要一些时间。</p>
         </template>
     </ModalCard>
 
     <ModalCard id="import-profile-from-code-modal" v-else-if="activeStep === 'IMPORT_CODE'" :can-close="!importViaCodeInProgress" key="IMPORT_CODE" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">Enter the profile code</h2>
+            <h2 class="modal-title">输入播放集分享代码</h2>
         </template>
         <template v-slot:body>
             <input
@@ -322,13 +322,13 @@ function onContentOrPathNotSet() {
                 class="input"
                 type="text"
                 ref="profileCodeInput"
-                placeholder="Enter the profile code"
+                placeholder="分享代码..."
                 autocomplete="off"
             />
             <br />
             <br />
             <span class="tag is-danger" v-if="profileImportCode !== '' && !isProfileCodeValid">
-                Invalid code, check for typos
+                无效代码，检查代码是否错误
             </span>
         </template>
         <template v-slot:footer>
@@ -337,23 +337,23 @@ function onContentOrPathNotSet() {
                 id="modal-import-profile-from-code"
                 class="button is-info"
                 @click="onProfileCodeEntered();">
-                {{importViaCodeInProgress ? 'Loading...' : 'Continue'}}
+                {{importViaCodeInProgress ? '加载中...' : '继续'}}
             </button>
         </template>
     </ModalCard>
 
     <ModalCard id="import-profile-refresh-mod-list-modal" v-else-if="activeStep === 'REFRESH_MOD_LIST'" key="REFRESH_MOD_LIST" :is-active="isOpen" :can-close="false">
         <template v-slot:header>
-            <h2 class="modal-title">Refreshing online mod list</h2>
+            <h2 class="modal-title">将要安装的模组</h2>
         </template>
         <template v-slot:footer>
             <div>
                 <p>
-                    Some of the packages in the profile are not recognized by the mod manager.
-                    Refreshing the online mod list might fix the problem. Please wait...
+                    播放集中的一些模组不被模组管理器识别。
+                    刷新在线模组列表可能会解决问题。请等待...
                 </p>
                 <p v-if="store.getters['download/activeDownloadCount'] > 0" class="margin-top">
-                    Waiting for mod downloads to finish before refreshing the online mod list...
+                    等待模组下载完成后再刷新在线模组列表...
                 </p>
                 <p v-else class="margin-top">
                     {{store.state.tsMods.thunderstoreModListUpdateStatus}}
@@ -364,19 +364,19 @@ function onContentOrPathNotSet() {
 
     <ModalCard id="review-profile-import-modal" v-else-if="activeStep === 'REVIEW_IMPORT'" key="REVIEW_IMPORT" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">Packages to be installed</h2>
+            <h2 class="modal-title">待安装的模组</h2>
         </template>
         <template v-slot:body>
             <div v-if="knownProfileMods.length === 0 || profileMods.unknown.length > 0" class="notification is-warning">
-                <p>These packages in the profile were not found on Thunderstore and will not be installed:</p>
+                <p>这些在播放集中的模组在 Thunderstore 上未找到，将不会安装：</p>
                 <p class="margin-top">{{ unknownProfileModNames }}</p>
 
                 <p v-if="knownProfileMods.length === 0" class="margin-top">
-                    Ensure the profile is intended for the currently selected game.
+                    确保该播放集适用于当前所选游戏。
                 </p>
             </div>
 
-            <p v-if="knownProfileMods.length > 0 && profileMods.unknown.length > 0" class="margin-bottom">These packages will be installed:</p>
+            <p v-if="knownProfileMods.length > 0 && profileMods.unknown.length > 0" class="margin-bottom">这些模组将被安装：</p>
             <OnlineModList
                 v-if="knownProfileMods.length > 0"
                 :paged-mod-list="knownProfileMods"
@@ -392,7 +392,7 @@ function onContentOrPathNotSet() {
                     class="is-checkradio has-background-color"
                     type="checkbox"
                 >
-                <label for="partialImportAllowedCheckbox">I understand that some of the mods won't be imported</label>
+                <label for="partialImportAllowedCheckbox">我明白有些模组不会被导入</label>
             </div>
 
             <button
@@ -402,7 +402,7 @@ function onContentOrPathNotSet() {
                 :disabled="knownProfileMods.length === 0 || (profileMods.unknown.length > 0 && !isPartialImportAllowed)"
                 @click="onProfileReviewConfirmed"
             >
-                Import
+                导入
             </button>
 
         </template>
@@ -410,28 +410,28 @@ function onContentOrPathNotSet() {
 
     <ModalCard id="import-or-update-profile-selection-modal" v-else-if="activeStep === 'IMPORT_UPDATE_SELECTION'" key="IMPORT_UPDATE_SELECTION" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">Are you going to be updating an existing profile or creating a new one?</h2>
+            <h2 class="modal-title">您是要更新现有播放集还是创建新播放集？</h2>
         </template>
         <template v-slot:footer>
             <button id="modal-import-new-profile"
                     class="button is-info"
                     @click="onCreateOrUpdateSelect('CREATE')">
-                Import new profile
+                导入新播放集
             </button>
             <button id="modal-update-existing-profile"
                     class="button is-primary"
                     @click="onCreateOrUpdateSelect('UPDATE')">
-                Update existing profile
+                更新现有播放集
             </button>
         </template>
     </ModalCard>
 
     <ModalCard id="import-add-profile-modal" v-else-if="activeStep === 'ADDING_PROFILE'" key="ADDING_PROFILE" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 v-if="importUpdateSelection === 'CREATE'" class="modal-title">Import a profile</h2>
+            <h2 v-if="importUpdateSelection === 'CREATE'" class="modal-title">导入播放集</h2>
         </template>
         <template v-slot:body v-if="importUpdateSelection === 'CREATE'">
-            <p>This profile will store its own mods independently from other profiles.</p>
+            <p>此播放集将独立于其他播放集存储自己的模组。</p>
             <br/>
             <input
                 v-model="targetProfileName"
@@ -444,32 +444,32 @@ function onContentOrPathNotSet() {
             />
             <br/><br/>
             <span class="tag is-dark" v-if="makeProfileNameSafe(targetProfileName) === ''">
-                Profile name required
+                需要播放集名称
             </span>
             <span class="tag is-success" v-else-if="!doesProfileExist(targetProfileName)">
-                "{{makeProfileNameSafe(targetProfileName)}}" is available
+                "{{makeProfileNameSafe(targetProfileName)}}" 可用
             </span>
             <span class="tag is-danger" v-else>
-                "{{makeProfileNameSafe(targetProfileName)}}" is either already in use, or contains invalid characters
+                "{{makeProfileNameSafe(targetProfileName)}}" 已在使用中，或包含无效字符
             </span>
         </template>
         <template v-slot:body v-else-if="importUpdateSelection === 'UPDATE'">
             <div class="notification is-warning">
-                <p>All contents of the profile will be overwritten with the contents of the code/file.</p>
+                <p>播放集的所有内容都将被代码/文件的内容覆盖。</p>
             </div>
-            <p>Select a profile below:</p>
+            <p>选择以下某个播放集：</p>
             <br/>
             <select class="select" v-model="targetProfileName">
                 <option v-for="profile of profileList" :key="profile">{{ profile }}</option>
             </select>
         </template>
         <template v-slot:footer v-if="importUpdateSelection === 'CREATE'">
-            <button id="modal-create-profile-invalid" class="button is-danger" v-if="doesProfileExist(targetProfileName)">Create</button>
-            <button id="modal-create-profile" class="button is-info" v-else @click="onImportTargetSelected()">Create</button>
+            <button id="modal-create-profile-invalid" class="button is-danger" v-if="doesProfileExist(targetProfileName)">创建</button>
+            <button id="modal-create-profile" class="button is-info" v-else @click="onImportTargetSelected()">创建</button>
         </template>
         <template v-slot:footer v-else-if="importUpdateSelection === 'UPDATE'">
-            <button id="modal-update-profile-invalid" class="button is-danger" v-if="!doesProfileExist(targetProfileName)">Update profile: {{ targetProfileName }}</button>
-            <button id="modal-update-profile" class="button is-info" v-else @click="onImportTargetSelected()">Update profile: {{ targetProfileName }}</button>
+            <button id="modal-update-profile-invalid" class="button is-danger" v-if="!doesProfileExist(targetProfileName)">更新播放集: {{ targetProfileName }}</button>
+            <button id="modal-update-profile" class="button is-info" v-else @click="onImportTargetSelected()">更新播放集: {{ targetProfileName }}</button>
         </template>
     </ModalCard>
 
@@ -479,9 +479,9 @@ function onContentOrPathNotSet() {
         </template>
         <template v-slot:footer>
             <p>
-                This may take a while, as files are being downloaded, extracted, and copied.
+                这可能需要一段时间，因为正在下载、提取和复制文件。
                 <br><br>
-                Please do not close {{appName}}.
+                请不要关闭 {{appName}}.
             </p>
         </template>
     </ModalCard>

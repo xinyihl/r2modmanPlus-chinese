@@ -17,8 +17,8 @@ import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 import { getStore } from '../../providers/generic/store/StoreProvider';
 import { State } from '../../store';
 import VueRouter from 'vue-router';
-import {getLaunchType, LaunchType} from "../../model/real_enums/launch/LaunchType";
-import {LaunchTypeModalOpen} from "../../components/modals/launch-type/LaunchTypeRefs";
+import { getLaunchType, LaunchType } from "../../model/real_enums/launch/LaunchType";
+import { LaunchTypeModalOpen } from "../../components/modals/launch-type/LaunchTypeRefs";
 import appWindow from '../../providers/node/app/app_window';
 
 const store = getStore<State>();
@@ -30,6 +30,7 @@ onMounted(() => {
 
 const activeTab = ref<string>('All');
 const tabs = ref<string[]>(['All', 'Profile', 'Locations', 'Debugging', 'Modpacks', 'Other']);
+const tabsI = ['全部', '播放集', '位置', '调试', '整合包', '其他'];
 const logOutput = ref<LogOutputProvider>(LogOutputProvider.instance);
 const search = ref<string>('');
 const managerVersionNumber = ref<VersionNumber>(ManagerInformation.VERSION);
@@ -43,8 +44,8 @@ const appName = computed(() => ManagerInformation.APP_NAME);
 let settingsList = [
     new SettingsRow(
         'Locations',
-        'Browse data folder',
-        'Open the folder where mods are stored for all games and profiles.',
+        '浏览数据文件夹',
+        '打开存储所有游戏和配置文件的模组文件夹',
         async () => PathResolver.ROOT,
         'fa-door-open',
         () => {
@@ -53,8 +54,8 @@ let settingsList = [
     ),
     new SettingsRow(
         'Locations',
-        `Change ${activeGame.value.displayName} folder`,
-        `Change the location of the ${activeGame.value.displayName} folder that ${appName.value} uses.`,
+        `更改 ${activeGame.value.displayName} 文件夹`,
+        `更改 ${appName.value} 使用的 ${activeGame.value.displayName} 文件夹位置`,
         async () => {
             if (settings.value.getContext().gameSpecific.gameDirectory !== null) {
                 const directory = await GameDirectoryResolverProvider.instance.getDirectory(activeGame.value);
@@ -62,7 +63,7 @@ let settingsList = [
                     return directory;
                 }
             }
-            return 'Please set manually';
+            return '请手动设置';
         },
         'fa-folder-open',
         () => {
@@ -76,8 +77,8 @@ let settingsList = [
     ),
     new SettingsRow(
         'Locations',
-        'Browse profile folder',
-        'Open the folder where mods are stored for the current profile.',
+        '浏览配置文件文件夹',
+        '打开存储当前配置文件的模组文件夹',
         async () => {
             return store.getters['profile/activeProfile'].getProfilePath();
         },
@@ -86,8 +87,8 @@ let settingsList = [
     ),
     new SettingsRow(
         'Locations',
-        'Change data folder',
-        'Change the folder where mods are stored for all games and profiles. The folder will not be deleted, and existing profiles will not carry across.',
+        '更改数据文件夹',
+        '更改存储所有游戏和配置文件的模组文件夹。原文件夹不会被删除，现有配置文件不会迁移',
         async () => {
             return PathResolver.ROOT;
         },
@@ -96,9 +97,9 @@ let settingsList = [
     ),
     new SettingsRow(
         'Debugging',
-        'Copy log file contents to clipboard',
-        'Copy the text inside the LogOutput.log file to the clipboard, with Discord formatting.',
-        async () => logOutput.value.exists ? 'Log file exists' : 'Log file does not exist',
+        '复制日志内容到剪贴板',
+        '将 LogOutput.log 文件内容复制到剪贴板（含 Discord 格式）',
+        async () => logOutput.value.exists ? '日志文件存在' : '日志文件不存在',
         'fa-clipboard',
         () => {
             if (logOutput.value.exists) {
@@ -108,194 +109,194 @@ let settingsList = [
     ),
     new SettingsRow(
         'Debugging',
-        'Copy troubleshooting information to clipboard',
-        'Copy settings and other information to the clipboard, with Discord formatting.',
-        async () => 'Share this information when requesting support on Discord.',
+        '复制故障排除信息',
+        '将设置和其他信息复制到剪贴板（含 Discord 格式）',
+        async () => '在 Discord 请求支持时共享此信息。',
         'fa-clipboard',
         () => emitInvoke('CopyTroubleshootingInfoToClipboard')
     ),
     new SettingsRow(
         'Debugging',
-        'Toggle download cache',
-        'Downloading a mod will ignore mods stored in the cache. Mods will still be placed in the cache.',
+        '切换下载缓存',
+        '下载模组时将忽略缓存中的模组，但仍会将新模组存入缓存',
         async () => {
             return store.state.download.ignoreCache
-                ? 'Current: cache is disabled'
-                : 'Current: cache is enabled (recommended)';
+                ? '当前：缓存已禁用'
+                : '当前：缓存已启用（推荐）';
         },
         'fa-exchange-alt',
         () => emitInvoke('ToggleDownloadCache')
     ),
     new SettingsRow(
         'Debugging',
-        'Set launch parameters',
-        'Provide custom arguments used to start the game.',
-        async () => 'These commands are used against the Steam executable on game startup',
+        '设置启动参数',
+        '提供用于启动游戏的自定义参数',
+        async () => '这些命令用于游戏启动上的 Steam 可执行文件',
         'fa-wrench',
         () => emitInvoke('SetLaunchParameters')
     ),
     new SettingsRow(
         'Debugging',
-        'Clean mod cache',
-        'Free extra space caused by cached mods that are not currently in a profile.',
-        async () => 'Check all profiles for unused mods and clear cache',
+        '清理模组缓存',
+        '清理未在当前配置文件中使用的缓存模组以释放空间',
+        async () => '检查所有配置文件中未使用的 mod 并清除缓存',
         'fa-trash',
         () => emitInvoke('CleanCache')
     ),
     new SettingsRow(
         'Debugging',
-        'Clean online mod list',
-        'Deletes local copy of mod list, forcing the next refresh to fetch a new one.',
+        '清理在线模组列表',
+        '删除本地模组列表副本，强制下次刷新时重新获取',
         async () => store.dispatch('tsMods/getActiveGameCacheStatus'),
         'fa-trash',
         () => store.dispatch('tsMods/resetActiveGameCache')
     ),
     new SettingsRow(
         'Debugging',
-        'Toggle preferred Thunderstore CDN',
-        'Switch the CDN until app is restarted. This might bypass issues with downloading mods.',
-        async () => `Current: ${CdnProvider.current.label} (${CdnProvider.current.url})`,
+        '切换首选 Thunderstore CDN',
+        '临时切换 CDN 直到应用重启，可能解决模组下载问题',
+        async () => `当前: ${CdnProvider.current.label} (${CdnProvider.current.url})`,
         'fa-exchange-alt',
         CdnProvider.togglePreferredCdn
     ),
     new SettingsRow(
         'Profile',
-        'Change profile',
-        'Change the mod profile.',
+        '切换播放集',
+        '更换模组播放集',
         async () => {
-            return `Current profile: ${store.getters['profile/activeProfile'].getProfileName()}`
+            return `当前播放集: ${store.getters['profile/activeProfile'].getProfileName()}`
         },
         'fa-file-import',
         () => emitInvoke('ChangeProfile')
     ),
     new SettingsRow(
         'Profile',
-        'Enable all mods',
-        'Enable all mods for the current profile',
-        async () => `${localModList.value.length - ProfileModList.getDisabledModCount(localModList.value)}/${localModList.value.length} enabled`,
+        '启用全部模组',
+        '为当前播放集启用所有模组',
+        async () => `${localModList.value.length - ProfileModList.getDisabledModCount(localModList.value)}/${localModList.value.length} 启用`,
         'fa-file-import',
         () => emitInvoke('EnableAll')
     ),
     new SettingsRow(
         'Profile',
-        'Disable all mods',
-        'Disable all mods for the current profile',
-        async () => `${ProfileModList.getDisabledModCount(localModList.value)}/${localModList.value.length} disabled`,
+        '禁用全部模组',
+        '为当前播放集禁用所有模组',
+        async () => `${ProfileModList.getDisabledModCount(localModList.value)}/${localModList.value.length} 禁用`,
         'fa-file-import',
         () => emitInvoke('DisableAll')
     ),
     new SettingsRow(
         'Profile',
-        'Import local mod',
-        'Install a mod offline from your files.',
-        async () => 'Not all mods can be installed locally',
+        '导入本地模组',
+        '从本地文件离线安装模组',
+        async () => '并非所有 mod 都可以在本地安装',
         'fa-file-import',
         () => store.commit("openLocalFileImportModal")
     ),
     new SettingsRow(
         'Profile',
-        'Export profile as a file',
-        'Export your mod list and configs as a file.',
-        async () => 'The exported file can be shared with friends to get an identical profile quickly and easily',
+        '导出播放集为文件',
+        '将模组列表和配置导出为可分享文件',
+        async () => '可以与朋友共享导出的文件，以快速轻松地获得相同的播放集',
         'fa-file-export',
         () => store.dispatch("profileExport/exportProfileAsFile")
     ),
     new SettingsRow(
         'Profile',
-        'Export profile as a code',
-        'Export your mod list and configs as a code.',
-        async () => 'The exported code can be shared with friends to get an identical profile quickly and easily',
+        '导出播放集为分享代码',
+        '将模组列表和配置导出为分享代码',
+        async () => '可以与朋友共享导出的代码，以快速轻松地获得相同的播放集',
         'fa-file-export',
         () => store.dispatch("profileExport/exportProfileAsCode")
     ),
     new SettingsRow(
         'Profile',
-        'Update all mods',
-        'Quickly update every installed mod to their latest versions.',
+        '更新全部模组',
+        '快速将所有已安装模组更新至最新版本',
         async () => {
             const outdatedMods = store.getters['profile/modsWithUpdates'];
             if (outdatedMods.length === 1) {
-                return "1 mod has an update available";
+                return "1 个模组有一个更新";
             }
-            return `${outdatedMods.length} mods have an update available`;
+            return `${outdatedMods.length} 个模组有一个更新`;
         },
         'fa-cloud-upload-alt',
         () => emitInvoke('UpdateAllMods')
     ),
     new SettingsRow(
         'Other',
-        'Toggle funky mode',
-        'Enable/disable funky mode.',
+        '切换趣味模式',
+        '启用/禁用趣味模式',
         async () => {
             return settings.value.getContext().global.funkyModeEnabled
-                ? 'Current: enabled'
-                : 'Current: disabled (default)';
+                ? '当前: 启用'
+                : '当前: 禁用（默认）';
         },
         'fa-exchange-alt',
         () => emitInvoke('ToggleFunkyMode')
     ),
     new SettingsRow(
         'Other',
-        'Switch theme',
-        'Switch between light and dark themes.',
+        '切换主题',
+        '在浅色和深色主题之间切换',
         async () => {
             return settings.value.getContext().global.darkTheme
-                ? 'Current: dark theme'
-                : 'Current: light theme (default)';
+                ? '当前: 深色主题'
+                : '当前: 浅色主题（默认）';
         },
         'fa-exchange-alt',
         () => emitInvoke('SwitchTheme')
     ),
     new SettingsRow(
         'Other',
-        'Switch card display type',
-        'Switch between expanded or collapsed cards.',
+        '切换卡片显示样式',
+        '在展开或折叠卡片视图之间切换',
         async () => {
             return settings.value.getContext().global.expandedCards
-                ? 'Current: expanded'
-                : 'Current: collapsed (default)';
+                ? '当前：已展开'
+                : '当前：已折叠（默认）';
         },
         'fa-exchange-alt',
         () => emitInvoke('SwitchCard')
     ),
     new SettingsRow(
         'Other',
-        'Refresh online mod list',
-        'Check for any new mod releases.',
+        '刷新在线模组列表',
+        '检查新的模组更新',
         async () => {
-                if (store.state.tsMods.isThunderstoreModListUpdateInProgress) {
-                    return store.state.tsMods.thunderstoreModListUpdateStatus || "Refreshing...";
-                }
-                if (store.state.tsMods.thunderstoreModListUpdateError) {
-                    return `Error refreshing the mod list: ${store.state.tsMods.thunderstoreModListUpdateError.message}`;
-                }
-                if (store.getters['download/activeDownloadCount'] > 0) {
-                    return "Refreshing the mod list is disabled while there are active downloads.";
-                }
-                if (store.state.tsMods.modsLastUpdated !== undefined) {
-                    return "Cache date: " + moment(store.state.tsMods.modsLastUpdated).format("MMMM Do YYYY, h:mm:ss a");
-                }
-                return "No API information available";
-            },
+            if (store.state.tsMods.isThunderstoreModListUpdateInProgress) {
+                return store.state.tsMods.thunderstoreModListUpdateStatus || "刷新...";
+            }
+            if (store.state.tsMods.thunderstoreModListUpdateError) {
+                return `刷新 mod 列表错误: ${store.state.tsMods.thunderstoreModListUpdateError.message}`;
+            }
+            if (store.getters['download/activeDownloadCount'] > 0) {
+                return "在有活动下载时，刷新 mod 列表将被禁用。";
+            }
+            if (store.state.tsMods.modsLastUpdated !== undefined) {
+                return "检查日期: " + moment(store.state.tsMods.modsLastUpdated).format("MMMM Do YYYY, h:mm:ss a");
+            }
+            return "没有可用的 API 信息";
+        },
         'fa-exchange-alt',
         async () => await store.dispatch("tsMods/syncPackageList")
     ),
     new SettingsRow(
-      'Other',
-      'Change game',
-      'Change the current game',
-      async () => "",
+        'Other',
+        '切换游戏',
+        '更换当前管理的游戏',
+        async () => "",
         'fa-gamepad',
         async () => {
             await ManagerSettings.resetDefaults();
-            await router.push({name: 'index'});
+            await router.push({ name: 'index' });
         }
     ),
     new SettingsRow(
         'Modpacks',
-        'Show dependency strings',
-        'View a list of installed mods with their version strings. Used inside the dependencies array inside the manifest.json file.',
-        async () => `Show dependency strings for ${localModList.value.length} mod(s)`,
+        '显示依赖字符串',
+        '查看已安装模组的版本依赖字符串（用于 manifest.json 文件）',
+        async () => `显示 ${localModList.value.length} 个模组的依赖字符串`,
         'fa-file-alt',
         () => emitInvoke('ShowDependencyStrings')
     ),
@@ -318,8 +319,8 @@ onMounted(async () => {
         settingsList.push(
             new SettingsRow(
                 'Locations',
-                'Change Steam folder',
-                `Change the location of the Steam folder that ${appName.value} uses.`,
+                '更改 Steam 文件夹',
+                `更改 ${appName.value} 使用的 Steam 文件夹的位置。`,
                 async () => {
                     if (settings.value.getContext().global.steamDirectory !== null) {
                         const directory = await GameDirectoryResolverProvider.instance.getSteamDirectory();
@@ -327,16 +328,16 @@ onMounted(async () => {
                             return directory;
                         }
                     }
-                    return 'Please set manually';
+                    return '请手动设置';
                 },
                 'fa-folder-open',
                 () => emitInvoke('ChangeSteamDirectory')
             ),
             new SettingsRow(
                 'Debugging',
-                `Reset ${activeGame.value.displayName} installation`,
-                'Fix problems caused by corrupted files or files left over from manual modding attempts.',
-                async () => `This will delete all contents of the ${activeGame.value.steamFolderName} folder, and verify the files through Steam`,
+                `重新安装 ${activeGame.value.displayName}`,
+                '修复因手动修改尝试损坏的文件或文件而造成的问题。',
+                async () => `这将删除 ${activeGame.value.steamFolderName} 文件夹中的所有内容，并通过 Steam 验证文件`,
                 'fa-wrench',
                 () => emitInvoke('ValidateSteamInstallation')
             )
@@ -347,11 +348,11 @@ onMounted(async () => {
         settingsList.push(
             new SettingsRow(
                 'Debugging',
-                'Change launch behaviour',
-                'Select specific launch behaviour such as forcing Steam to launch with Proton',
+                '更改启动行为',
+                '选择特定的启动行为，例如强制 Steam 使用 Proton 启动',
                 async () => {
                     const launchType = await getLaunchType(activeGame.value);
-                    return `The current launch behaviour is set to: ${launchType}`;
+                    return `当前的启动行为设置为：${launchType}`;
                 },
                 'fa-gamepad',
                 () => {
@@ -390,44 +391,34 @@ function emitInvoke(invoked: string) {
 
 <template>
     <div id="settings-view">
-        <Hero title='Settings'
-              :subtitle='`Advanced options for ${appName}: ` + managerVersionNumber.toString()'
-              heroType='primary'/>
+        <Hero title='设置' :subtitle='`高级选项 ${appName}: ` + managerVersionNumber.toString()' heroType='primary' />
         <div class="margin-right">
             <div class="sticky-top sticky-top--opaque sticky-top--no-shadow sticky-top--no-padding">
                 <div class='border-at-bottom'>
                     <div class='card is-shadowless is-square'>
                         <div class='card-header-title'>
-                            <span class="non-selectable margin-right">Search:</span>
-                            <input v-model='search' class="input" type="text" placeholder="Search for a setting"/>
+                            <span class="non-selectable margin-right" style="white-space: nowrap;">查找:</span>
+                            <input v-model='search' class="input" type="text" placeholder="设置..." />
                         </div>
                     </div>
                 </div>
                 <div class="tabs">
                     <ul>
                         <li v-for="(key, index) in tabs" :key="`tab-${key}`"
-                            :class="[{'is-active': activeTab === key}]"
-                            @click="changeTab(key)">
-                            <a>{{key}}</a>
+                            :class="[{ 'is-active': activeTab === key }]" @click="changeTab(key)">
+                            <a>{{ tabsI[index] }}</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <template v-if="activeTab === 'All'">
-                <SettingsItem v-for="(key, _) in searchableSettings" :key="`setting-${key.action}`"
-                              :action="key.action"
-                              :description="key.description"
-                              :value="key.value"
-                              :icon="key.icon"
-                              @click="key.clickAction()"/>
+                <SettingsItem v-for="(key, _) in searchableSettings" :key="`setting-${key.action}`" :action="key.action"
+                    :description="key.description" :value="key.value" :icon="key.icon" @click="key.clickAction()" />
             </template>
             <template v-else>
                 <SettingsItem v-for="(key, _) in getFilteredSettings()" :key="`setting-${key.action}`"
-                              :action="key.action"
-                              :description="key.description"
-                              :value="key.value"
-                              :icon="key.icon"
-                              @click="key.clickAction()"/>
+                    :action="key.action" :description="key.description" :value="key.value" :icon="key.icon"
+                    @click="key.clickAction()" />
             </template>
         </div>
     </div>

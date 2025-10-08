@@ -1,6 +1,6 @@
 export enum SortConfigFile {
 
-    NAME = "Name",
-    LAST_UPDATED = "Last updated"
+    NAME = "名称",
+    LAST_UPDATED = "最后更新时间"
 
 }

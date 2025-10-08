@@ -34,19 +34,19 @@ async function removeProfile() {
     <ModalCard id="delete-profile-modal" v-if="isOpen" :is-active="isOpen" @close-modal="closeDeleteProfileModal">
 
         <template v-slot:header>
-            <h2 class="modal-title">Delete profile</h2>
+            <h2 class="modal-title">删除播放集</h2>
         </template>
         <template v-slot:body>
-            <p>This will remove all mods, and their config files, installed within this profile.</p>
-            <p>If this was an accident, click either the darkened area, or the cross inside located in the top right.</p>
-            <p>Are you sure you'd like to delete this profile?</p>
+            <p>这将删除此播放集中安装的所有模组及其配置文件。</p>
+            <p>如果这是意外，请单击变暗区域或位于右上角的内部十字。</p>
+            <p>您确定要删除此播放集吗？</p>
         </template>
         <template v-slot:footer>
             <button
                 :disabled="deletingInProgress"
                 class="button is-danger"
                 @click="removeProfile()"
-            >Delete profile</button>
+            >删除播放集</button>
         </template>
 
     </ModalCard>

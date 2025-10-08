@@ -17,16 +17,16 @@ function closeModal() {
 <template>
     <ModalCard id="profile-exported-modal" :is-active="isOpen" @close-modal="closeModal" :can-close="true">
         <template v-slot:header>
-            <h2 class='modal-title'>Profile exported</h2>
+            <h2 class='modal-title'>播放集导出</h2>
         </template>
         <template v-slot:body>
-            <p>Your code: <strong>{{exportCode}}</strong> has been copied to your clipboard. Just give it to a
-                friend!
+            <p>
+                你的代码：<strong>{{exportCode}}</strong> 已被复制到你的剪贴板。只需将其提供给朋友！
             </p>
         </template>
         <template v-slot:footer>
             <button class="button is-info" @click="closeModal">
-                Done
+                确定
             </button>
         </template>
     </ModalCard>
