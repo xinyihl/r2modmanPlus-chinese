@@ -32,6 +32,7 @@ const changelogError = ref<R2Error | null>(null);
 const activeTab = ref<"README" | "CHANGELOG" | "Dependencies">("README");
 const loadingPanel = ref<boolean>(true);
 const dependencies = ref<ThunderstoreMod[]>([]);
+const isNsfw = computed<boolean>(() => props.mod?.getNsfwFlag())
 
 const maxPanelWidth = ref(getMaxPanelWidth());
 
@@ -124,6 +125,7 @@ async function buildDependencies(mod: ThunderstoreMod) {
 fetchAll(props.mod);
 watch(() => props.mod, (newValue) => {
     fetchAll(newValue);
+    document.getElementById('package-preview-details')?.setAttribute('open', 'true');
 });
 
 function getReadableDate(date: string): string {
@@ -191,21 +193,27 @@ const i18n = {
         <div class="c-preview-panel" :style="`width: calc(${previewPanelWidth}px - 2.5rem + 5px); max-width: ${maxPanelWidth}px`">
             <div class="c-preview-panel__header">
                 <button class="close-button button" @click="() => emits('close')">
-                <i class="fas fa-times"/>
-            </button>
-            <h1 class="title">
-                {{ mod.getName() }}
-            </h1>
+                    <i class="fas fa-times"/>
+                </button>
+                <h1 class="title">
+                    {{ mod.getName() }}
+                </h1>
                 <h2 class="subtitle">
                     作者：{{ mod.getOwner() }}
                 </h2>
-                <div class="margin-top margin-bottom">
-                    <p class="description">{{ mod.getDescription() }}</p>
-                </div>
-                <p class='card-timestamp'><strong>下载量:</strong> {{mod.getDownloadCount()}}</p>
-                <p class='card-timestamp'><strong>收藏量:</strong> {{mod.getRating()}}</p>
-                <p class='card-timestamp'><strong>最后更新时间:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
-                <p class='card-timestamp'><strong>分类:</strong> {{getReadableCategories(mod)}}</p>
+                <details id="package-preview-details" open="true">
+                    <summary class='card-timestamp non-selectable'>封装信息</summary>
+                    <div class="notification is-warning margin-top" v-if="isNsfw">
+                        <p>这个模组可能包含潜在的露骨内容</p>
+                    </div>
+                    <div class="margin-top margin-bottom">
+                        <p class="description">{{ mod.getDescription() }}</p>
+                    </div>
+                    <p class='card-timestamp'><strong>下载量:</strong> {{mod.getDownloadCount()}}</p>
+                    <p class='card-timestamp'><strong>收藏量:</strong> {{mod.getRating()}}</p>
+                    <p class='card-timestamp'><strong>最后更新时间:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
+                    <p class='card-timestamp'><strong>分类:</strong> {{getReadableCategories(mod)}}</p>
+                </details>
             </div>
             <div class="sticky-top inherit-background-colour sticky-top--no-shadow sticky-top--opaque no-margin sticky-top--no-padding">
                 <div class="button-group">
