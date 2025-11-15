@@ -2,7 +2,7 @@
     <div>
         <ModalCard id="select-platform-modal" v-show="showPlatformModal" :is-active="showPlatformModal" @close-modal="() => {showPlatformModal = false;}" class="z-max z-top">
             <template v-slot:header>
-                <h2 class='modal-title'>哪个平台管理你的游戏？</h2>
+                <h2 class='modal-title'>选择管理你游戏的平台</h2>
             </template>
             <template v-slot:body>
                 <div v-if="selectedGame !== null">
@@ -54,7 +54,7 @@
                             </div>
                             <div class="margin-right">
                                 <button class="button is-info"
-                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectGame(selectedGame)">选择 {{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
+                                   :disabled="!isAnyGameSelected() && !runningMigration" @click="selectGame(selectedGame)">选择此{{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
                             </div>
                             <div class="margin-right">
                                 <button class="button"
@@ -141,8 +141,7 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="absolute-center text-center">
-                                                                    <button class="button is-info" @click="selectGame(game)" :class="[{'is-disabled': selectedGame === null}]">选择此
-                                                                        {{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
+                                                                    <button class="button is-info" @click="selectGame(game)" :class="[{'is-disabled': selectedGame === null}]">选择此{{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
                                                                     <br/><br/>
                                                                     <button class="button" @click="selectDefaultGame(game)">设置为默认值</button>
                                                                 </div>
@@ -361,7 +360,7 @@ function isAnyGameSelected() {
 onMounted(async () => {
 
     // Check for updates in the background
-    window.app.checkForApplicationUpdates()
+    //window.app.checkForApplicationUpdates()
 
     runningMigration.value = true;
     await store.dispatch('checkMigrations');

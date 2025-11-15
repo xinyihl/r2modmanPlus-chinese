@@ -72,7 +72,7 @@ async function updateAndClose() {
               无法确定所需的参数是否已设置。
             </p>
             <p>
-              如果您尚未手动执行此操作，请将以下启动参数添加到 Steam 的游戏属性中：
+              如果你尚未手动执行此操作，请将以下启动参数添加到 Steam 的游戏属性中：
             </p>
             <div>
               <code>

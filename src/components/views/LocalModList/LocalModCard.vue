@@ -193,12 +193,12 @@ function dependencyStringToModName(x: string) {
             <span class="non-selectable">
                 <span v-if="isDeprecated"
                     class="tag is-danger margin-right margin-right--half-width"
-                    v-tooltip.right="'这个 mod 被弃用了，可能无法使用'">
+                    v-tooltip.right="'这个模组被弃用了，可能无法使用'">
                     已弃用
                 </span>
                 <span v-if="!mod.isEnabled()"
                     class="tag is-warning margin-right margin-right--half-width"
-                    v-tooltip.right="'此 mod 不会在游戏中使用'">
+                    v-tooltip.right="'此模组不会在游戏中使用'">
                     已禁用
                 </span>
                 <span class="card-title selectable">

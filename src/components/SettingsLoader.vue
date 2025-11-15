@@ -12,7 +12,7 @@
                     <h5 class="title is-5">建议</h5>
 
                     <p v-if="phase === PHASES.GAME_FAILED">
-                        这是 MOD 管理器本身的问题。
+                        这是模组管理器本身的问题。
                         如果有一个较新版本的管理器可用，请尝试安装它。
                     </p>
 

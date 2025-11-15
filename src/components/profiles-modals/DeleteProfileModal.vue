@@ -39,7 +39,7 @@ async function removeProfile() {
         <template v-slot:body>
             <p>这将删除此播放集中安装的所有模组及其配置文件。</p>
             <p>如果这是意外，请单击变暗区域或位于右上角的内部十字。</p>
-            <p>您确定要删除此播放集吗？</p>
+            <p>你确定要删除此播放集吗？</p>
         </template>
         <template v-slot:footer>
             <button

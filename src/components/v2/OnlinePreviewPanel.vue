@@ -202,7 +202,7 @@ const i18n = {
                     作者：{{ mod.getOwner() }}
                 </h2>
                 <details id="package-preview-details" open="true">
-                    <summary class='card-timestamp non-selectable'>封装信息</summary>
+                    <summary class='card-timestamp non-selectable'>详细信息</summary>
                     <div class="notification is-warning margin-top" v-if="isNsfw">
                         <p>这个模组可能包含潜在的露骨内容</p>
                     </div>
@@ -211,7 +211,7 @@ const i18n = {
                     </div>
                     <p class='card-timestamp'><strong>下载量:</strong> {{mod.getDownloadCount()}}</p>
                     <p class='card-timestamp'><strong>收藏量:</strong> {{mod.getRating()}}</p>
-                    <p class='card-timestamp'><strong>最后更新时间:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
+                    <p class='card-timestamp'><strong>最后更新:</strong> {{getReadableDate(mod.getDateUpdated())}}</p>
                     <p class='card-timestamp'><strong>分类:</strong> {{getReadableCategories(mod)}}</p>
                 </details>
             </div>

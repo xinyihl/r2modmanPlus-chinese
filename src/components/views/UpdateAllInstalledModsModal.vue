@@ -32,10 +32,10 @@ async function updateAllToLatestVersion() {
 <template>
     <ModalCard id="update-all-installed-mods-modal" :is-active="isOpen" :can-close="true" v-if="modsWithUpdates.length === 0" @close-modal="closeModal()">
         <template v-slot:header>
-            <h2 class='modal-title'>没有 Mod 需要更新</h2>
+            <h2 class='modal-title'>没有模组需要更新</h2>
         </template>
         <template v-slot:body>
-            <p>要么所有已安装的 Mod 都是最新的，要么没有安装任何 Mod。</p>
+            <p>要么所有已安装的模组都是最新的，要么没有安装任何模组。</p>
         </template>
         <template v-slot:footer>
             <button class="button is-info" @click="closeModal()">关闭</button>
@@ -43,12 +43,12 @@ async function updateAllToLatestVersion() {
     </ModalCard>
     <ModalCard id="update-all-installed-mods-modal" :is-active="isOpen" :can-close="true" v-else @close-modal="closeModal()">
         <template v-slot:header>
-            <h2 class='modal-title'>更新所有已安装 Mod</h2>
+            <h2 class='modal-title'>更新所有已安装模组</h2>
         </template>
         <template v-slot:body>
-            <p>所有安装的 Mod 都将更新到其最新版本。</p>
+            <p>所有安装的模组都将更新到其最新版本。</p>
             <p>将安装任何缺失的前置模组。</p>
-            <p>以下 Mod 将下载并安装：</p>
+            <p>以下模组将下载并安装：</p>
             <br/>
             <ul class="list">
                 <li class="list-item" v-for='(mod, index) in modsWithUpdates'

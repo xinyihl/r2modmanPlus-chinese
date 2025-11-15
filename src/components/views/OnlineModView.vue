@@ -62,7 +62,7 @@
                 </div>
                 <div class="in-mod-list" v-else-if="getPaginationSize() === 0">
                     <p class="notification margin-right">
-                        {{thunderstoreModList.length ? "找不到 mod 匹配搜索": "没有可用的 mod"}}
+                        {{thunderstoreModList.length ? "没有相应模组匹配搜索": "没有可用的模组"}}
                     </p>
                 </div>
             </div>

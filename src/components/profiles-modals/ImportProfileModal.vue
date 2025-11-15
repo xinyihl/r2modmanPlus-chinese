@@ -288,8 +288,8 @@ function onContentOrPathNotSet() {
 <template>
     <ModalCard id="import-profile-from-file-or-code-modal" v-if="activeStep === 'FILE_CODE_SELECTION'" key="FILE_CODE_SELECTION" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title" v-if="importUpdateSelection === 'CREATE'">您如何导入播放集？</h2>
-            <h2 class="modal-title" v-if="importUpdateSelection === 'UPDATE'">您如何更新播放集？</h2>
+            <h2 class="modal-title" v-if="importUpdateSelection === 'CREATE'">你如何导入播放集？</h2>
+            <h2 class="modal-title" v-if="importUpdateSelection === 'UPDATE'">你如何更新播放集？</h2>
         </template>
         <template v-slot:footer>
             <button id="modal-import-profile-file"
@@ -410,7 +410,7 @@ function onContentOrPathNotSet() {
 
     <ModalCard id="import-or-update-profile-selection-modal" v-else-if="activeStep === 'IMPORT_UPDATE_SELECTION'" key="IMPORT_UPDATE_SELECTION" :is-active="isOpen" @close-modal="closeModal">
         <template v-slot:header>
-            <h2 class="modal-title">您是要更新现有播放集还是创建新播放集？</h2>
+            <h2 class="modal-title">你是要更新现有播放集还是创建新播放集？</h2>
         </template>
         <template v-slot:footer>
             <button id="modal-import-new-profile"

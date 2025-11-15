@@ -9,7 +9,7 @@
             <div class="notification is-warning is-square">
                 <div class="container">
                     <p>
-                        配置文件是在至少安装了一次 MOD 并且启动游戏后生成的。
+                        配置文件是在至少安装了一次模组并且启动游戏后生成的。
                     </p>
                 </div>
             </div>

@@ -139,7 +139,7 @@ let settingsList = [
         'Debugging',
         '清理模组缓存',
         '清理未在当前配置文件中使用的缓存模组以释放空间',
-        async () => '检查所有配置文件中未使用的 mod 并清除缓存',
+        async () => '检查所有配置文件中未使用的模组并清除缓存',
         'fa-trash',
         () => emitInvoke('CleanCache')
     ),
@@ -189,7 +189,7 @@ let settingsList = [
         'Profile',
         '导入本地模组',
         '从本地文件离线安装模组',
-        async () => '并非所有 mod 都可以在本地安装',
+        async () => '并非所有模组都可以在本地安装',
         'fa-file-import',
         () => store.commit("openLocalFileImportModal")
     ),
@@ -268,10 +268,10 @@ let settingsList = [
                 return store.state.tsMods.thunderstoreModListUpdateStatus || "刷新...";
             }
             if (store.state.tsMods.thunderstoreModListUpdateError) {
-                return `刷新 mod 列表错误: ${store.state.tsMods.thunderstoreModListUpdateError.message}`;
+                return `刷新模组列表错误: ${store.state.tsMods.thunderstoreModListUpdateError.message}`;
             }
             if (store.getters['download/activeDownloadCount'] > 0) {
-                return "在有活动下载时，刷新 mod 列表将被禁用。";
+                return "在有活动下载时，刷新模组列表将被禁用。";
             }
             if (store.state.tsMods.modsLastUpdated !== undefined) {
                 return "检查日期: " + moment(store.state.tsMods.modsLastUpdated).format("MMMM Do YYYY, h:mm:ss a");
