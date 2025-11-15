@@ -1,6 +1,6 @@
 {
   "name": "r2modman",
-  "version": "3.2.9",
+  "version": "3.2.10",
   "description": "A simple and easy to use mod manager for many games using Thunderstore.",
   "productName": "r2modman",
   "author": "ebkr",
@@ -88,8 +88,8 @@
     "electron-packager": "14.1.1",
     "identity-obj-proxy": "^3.0.0",
     "mock-require": "^3.0.3",
-    "quicktype-core": "^23.0.171",
     "postcss": "^8.5.6",
+    "quicktype-core": "^23.0.171",
     "sass": "^1.70.0",
     "sass-loader": "^16.0.5",
     "sinon": "^11.1.1",
