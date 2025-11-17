@@ -102,7 +102,7 @@ onMounted(async () => {
 
     hookBackgroundUpdateThunderstoreModList(router);
     hookModInstallingViaProtocol(router);
-    await checkCdnConnection();
+    checkCdnConnection();
 
     InstallationRules.apply();
     InstallationRules.validate();
