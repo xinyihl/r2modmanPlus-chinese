@@ -22,7 +22,7 @@
                         <div class="notification is-warning margin-right">
                             <span>
                                 你有{{ numberOfModsWithUpdates }}个模组更新可用。
-                                是否要<a @click="$store.commit('openUpdateAllModsModal')">更新全部</a>？
+                                是否要<a @click="store.commit('openUpdateAllModsModal')">更新全部</a>？
                             </span>
                             <a class="float-right cursor-pointer" @click="store.commit('profile/dismissUpdateAll')">
                                 <i class="fas fa-times" />
