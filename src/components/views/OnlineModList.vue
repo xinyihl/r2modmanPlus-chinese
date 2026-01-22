@@ -34,17 +34,17 @@
                 <p class='card-timestamp'><strong>最后更新:</strong> {{getReadableDate(key.getDateUpdated())}}</p>
                 <p class='card-timestamp'><strong>类别:</strong> {{getReadableCategories(key)}}</p>
             </template>
-            <a class='card-footer-item' v-if="!readOnly" @click='showDownloadModal(key)'>Download</a>
-            <ExternalLink :url="key.getPackageUrl()" class='card-footer-item'>
+            <button class='button' v-if="!readOnly" @click='showDownloadModal(key)'>下载</button>
+            <ExternalLink :url="key.getPackageUrl()" class='button'>
                 网站 <i class="fas fa-external-link-alt margin-left margin-left--half-width"></i>
             </ExternalLink>
             <template v-if="!readOnly">
-                <DonateButton :mod="key"/>
+                <DonateButton v-if="key" :mod="key"/>
             </template>
-            <div class='card-footer-item non-selectable'>
+            <div class='button non-selectable' disabled="true">
                 <span><i class='fas fa-download'/> {{key.getDownloadCount()}}</span>
             </div>
-            <div class='card-footer-item non-selectable'>
+            <div class='button non-selectable' disabled="true">
                 <span><i class='fas fa-thumbs-up'/> {{key.getRating()}}</span>
             </div>
         </ExpandableCard>
@@ -111,3 +111,13 @@ onMounted(() => {
 });
 
 </script>
+
+<style scoped lang="scss">
+.button[disabled="true"] {
+    color: inherit !important;
+    opacity: 1 !important;
+    pointer-events: none;
+    background-color: transparent;
+    border: 0;
+}
+</style>

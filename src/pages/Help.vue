@@ -157,7 +157,7 @@ onMounted(() => {
             doorstopTarget.value = "";
             return;
         } else {
-            doorstopTarget.value = target;
+            doorstopTarget.value = target.map(value => `"${value}"`).join(' ');
         }
     });
 });

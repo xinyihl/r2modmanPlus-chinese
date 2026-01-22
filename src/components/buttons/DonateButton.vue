@@ -1,8 +1,8 @@
 <template>
     <ExternalLink v-if="mod && mod.getDonationLink()"
           :url="mod.getDonationLink()"
-          class="card-footer-item"
-          v-tooltip.left="{content: '向模组作者捐款', distance: 0}">
+          class="button"
+          v-tooltip.top="{content: '向模组作者捐款', distance: 10}">
         <i class='fas fa-heart margin-right margin-right--half-width'></i>
         捐赠
     </ExternalLink>
