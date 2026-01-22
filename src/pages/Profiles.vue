@@ -1,67 +1,52 @@
 <template>
-  <div>
     <CreateProfileModal />
     <DeleteProfileModal />
     <RenameProfileModal />
     <ImportProfileModal />
     <!-- Content -->
-    <hero
-      title="选择播放集"
-      subtitle="播放集可以轻松组织模组"
-      heroType="primary"
-    />
-    <div class="columns">
-      <div class="column is-full">
-        <div>
-          <article class="media">
-            <div class="media-content">
-              <div class="content">
-                <div class='notification'>
-                    <div class="container">
-                        <i class='fas fa-long-arrow-alt-left margin-right' />
-                        <strong><a @click="backToGameSelection">回到游戏选择界面</a></strong>
-                    </div>
-                </div>
-                <div v-for="(profileName) of profileList" :key="profileName">
-                  <a @click="setSelectedProfile(profileName, false)">
-                    <div class="container">
-                      <div class="border-at-bottom">
-                        <div class="card is-shadowless">
-                          <p
-                            :class="['card-header-title', {'has-text-info':activeProfileName === profileName}]"
-                          >{{profileName}}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-                <div class="container">
-                  <nav class="level">
-                    <div class="level-item">
-                      <a id="select-profile" class="button is-info" @click="moveToNextScreen()">选择播放集</a>
-                    </div>
-                      <div class="level-item">
-                          <a id="rename-profile-disabled" class="button" v-if="activeProfileName === 'Default'" :disabled="true">重命名</a>
-                          <a id="rename-profile" class="button" @click="openRenameProfileModal()" v-else>重命名</a>
-                      </div>
-                    <div class="level-item">
-                      <a id="create-profile" class="button" @click="openCreateProfileModal()">新建</a>
-                    </div>
-                    <div class="level-item">
-                      <a class="button" @click="openImportProfileModal()">导入/更新</a>
-                    </div>
-                    <div class="level-item">
-                        <a class="button is-danger" @click="openDeleteProfileModal()">删除</a>
-                    </div>
-                  </nav>
-                </div>
-                </div>
-          </article>
+    <div id="profile-body">
+        <hero
+            title="选择播放集"
+            subtitle="播放集可以轻松组织模组"
+            heroType="primary"
+        />
+        <div class='notification'>
+            <div class="container">
+                <i class='fas fa-long-arrow-alt-left margin-right' />
+                <strong><a @click="backToGameSelection">回到游戏选择界面</a></strong>
+            </div>
         </div>
-      </div>
+        <div id="profile-list" class="margin-top">
+            <div class="container" id="profile-list-content">
+                <div v-for="(profileName) of profileList" :key="profileName">
+                    <a @click="setSelectedProfile(profileName, false)">
+                        <div class="border-at-bottom">
+                            <div class="">
+                                <p
+                                    :class="['card-header-title', {'has-text-info':activeProfileName === profileName}]"
+                                >{{ profileName }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="profile-actions">
+            <div class="container" id="profile-actions-container">
+                <div id="profile-actions-row">
+                    <button class="button is-info" @click="moveToNextScreen()">选择播放集</button>
+                    <button class="button" @click="openRenameProfileModal()" :disabled="activeProfileName === 'Default'">
+                        重命名
+                    </button>
+                    <button class="button" @click="openCreateProfileModal()">
+                        新建
+                    </button>
+                    <button class="button" @click="openImportProfileModal()">导入/更新</button>
+                    <button class="button is-danger" @click="openDeleteProfileModal()">删除</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang='ts' setup>
@@ -148,3 +133,48 @@ onMounted( async () => {
     await updateProfileList();
 })
 </script>
+
+<style lang="scss" scoped>
+#profile-body {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+#profile-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+#profile-list-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#profile-actions {
+    flex: 1;
+    margin: 2rem;
+    justify-items: center;
+    display: block;
+}
+
+#profile-actions-container {
+    display: flex;
+}
+
+#profile-actions-row {
+    display: flex;
+    align-self: start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: start;
+    text-align: left;
+    width: 100vw;
+}
+</style>
