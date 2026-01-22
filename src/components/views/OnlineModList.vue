@@ -40,6 +40,7 @@
             </ExternalLink>
             <template v-if="!readOnly">
                 <DonateButton v-if="key" :mod="key"/>
+                <DonateButton v-if="key" :mod="key"/>
             </template>
             <div class='button non-selectable' disabled="true">
                 <span><i class='fas fa-download'/> {{key.getDownloadCount()}}</span>

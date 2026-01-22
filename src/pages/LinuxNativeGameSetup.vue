@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<Hero :title="`Getting started on ${platformName}`" subtitle="Let's configure the game properly" heroType="primary" />
+		<Hero :title="`Getting started on ${platformName}`" subtitle="让我们正确配置游戏" heroType="primary" />
 		<br/>
         <div class="container margin-bottom" v-if="alreadyHadValuesSet && isFlatpak">
             <div class="notification is-warning">
-                <p>It looks like you've previously set launch arguments.</p>
-                <p>The Flatpak version of {{ appName }} now uses a different wrapper script.</p>
-                <p>You must update your launch arguments to support this.</p>
+                <p>您似乎已设置过启动参数。</p>
+                <p>{{ appName }} 的 Flatpak 版本现采用不同的封装脚本。</p>
+                <p>您必须更新启动参数以支持此变更。</p>
             </div>
         </div>
 		<div class="container">
@@ -31,7 +31,19 @@ import {State} from '../store';
 import {useRouter} from 'vue-router';
 import {ComputedWrapperLaunchArguments, WineDllOverridesValue} from '../components/computed/WrapperArguments';
 import InteractionProviderImpl from '../r2mm/system/InteractionProviderImpl';
+import {Hero} from '../components/all';
+import {computed, ref} from 'vue';
+import {getStore} from '../providers/generic/store/StoreProvider';
+import {State} from '../store';
+import {useRouter} from 'vue-router';
+import {ComputedWrapperLaunchArguments, WineDllOverridesValue} from '../components/computed/WrapperArguments';
+import InteractionProviderImpl from '../r2mm/system/InteractionProviderImpl';
 import appWindow from '../providers/node/app/app_window';
+import {
+    areAnyWrapperArgumentsProvided,
+    isManagerRunningOnFlatpak
+} from '../utils/LaunchUtils';
+import ManagerInformation from "../_managerinf/ManagerInformation";
 import {
     areAnyWrapperArgumentsProvided,
     isManagerRunningOnFlatpak
