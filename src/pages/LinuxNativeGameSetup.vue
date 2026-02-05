@@ -31,19 +31,7 @@ import {State} from '../store';
 import {useRouter} from 'vue-router';
 import {ComputedWrapperLaunchArguments, WineDllOverridesValue} from '../components/computed/WrapperArguments';
 import InteractionProviderImpl from '../r2mm/system/InteractionProviderImpl';
-import {Hero} from '../components/all';
-import {computed, ref} from 'vue';
-import {getStore} from '../providers/generic/store/StoreProvider';
-import {State} from '../store';
-import {useRouter} from 'vue-router';
-import {ComputedWrapperLaunchArguments, WineDllOverridesValue} from '../components/computed/WrapperArguments';
-import InteractionProviderImpl from '../r2mm/system/InteractionProviderImpl';
 import appWindow from '../providers/node/app/app_window';
-import {
-    areAnyWrapperArgumentsProvided,
-    isManagerRunningOnFlatpak
-} from '../utils/LaunchUtils';
-import ManagerInformation from "../_managerinf/ManagerInformation";
 import {
     areAnyWrapperArgumentsProvided,
     isManagerRunningOnFlatpak

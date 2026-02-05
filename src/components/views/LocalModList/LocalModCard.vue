@@ -10,7 +10,6 @@ import Dependants from '../../../r2mm/mods/Dependants';
 import { valueToReadableDate } from '../../../utils/DateUtils';
 import { splitToNameAndVersion } from '../../../utils/DependencyUtils';
 import { computed, onMounted, ref, watch } from 'vue';
-import { computed, onMounted, ref, watch } from 'vue';
 import { getStore } from '../../../providers/generic/store/StoreProvider';
 import { State } from '../../../store';
 
@@ -274,13 +273,11 @@ function dependencyStringToModName(x: string) {
         </button>
 
         <button v-if="missingDependencies.length"
-        <button v-if="missingDependencies.length"
             @click="downloadDependency(missingDependencies[0])"
             class='button'>
             下载依赖
         </button>
 
-        <button v-if="disabledDependencies.length"
         <button v-if="disabledDependencies.length"
             @click="enableMod(disabledDependencies[0])"
             class='button'>
