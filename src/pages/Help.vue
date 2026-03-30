@@ -1,4 +1,5 @@
 <template>
+    <ManagerActivityBar />
     <div id="help-view">
         <Hero title="帮助" subtitle="常见问题及其潜在解决方案" hero-type="primary"/>
         <div
@@ -11,7 +12,7 @@
                 </li>
             </ul>
         </div>
-        <div class="margin-right">
+        <div class="margin-right" id="help-content">
             <br/>
             <div ref="General" v-if="activeTab === 'General'">
                 <h2 class="title is-5">开始安装模组</h2>
@@ -98,6 +99,7 @@
 
 <script lang="ts" setup>
 import {ExternalLink, Hero} from '../components/all';
+import ManagerActivityBar from '../components/navigation/ManagerActivityBar.vue';
 import GameRunnerProvider from '../providers/generic/game/GameRunnerProvider';
 import R2Error from '../model/errors/R2Error';
 import InteractionProvider from '../providers/ror2/system/InteractionProvider';
@@ -166,5 +168,14 @@ onMounted(() => {
 <style lang="scss" scoped>
 #help-view {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
+}
+
+#help-content {
+    overflow-y: auto;
+    flex: 1;
 }
 </style>
