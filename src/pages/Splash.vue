@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="splash-body">
         <hero :title=heroTitle :subtitle='splashText' :heroType=heroType />
         <div class='notification is-warning'>
             <p>游戏更新可能会破坏模组。如果发布了新的更新，请耐心等待。</p>
@@ -201,3 +201,13 @@ onMounted(async () => {
     moveToNextScreen();
 })
 </script>
+
+<style lang="scss" scoped>
+#splash-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+</style>

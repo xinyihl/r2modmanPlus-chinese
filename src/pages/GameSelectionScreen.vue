@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="game-selection-screen">
         <ModalCard id="select-platform-modal" v-show="showPlatformModal" :is-active="showPlatformModal" @close-modal="() => {showPlatformModal = false;}" class="z-max z-top">
             <template v-slot:header>
                 <h2 class='modal-title'>选择管理你游戏的平台</h2>
@@ -423,5 +423,13 @@ function capitalize(str: string) {
     width: 188px;
     height: 250px;
     object-fit: cover;
+}
+
+#game-selection-screen {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 </style>
