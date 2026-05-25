@@ -14,6 +14,7 @@ import ZipProvider from "../providers/generic/zip/ZipProvider";
 import ProfileInstallerProvider from "../providers/ror2/installing/ProfileInstallerProvider";
 import * as PackageDb from '../r2mm/manager/PackageDexieStore';
 import ProfileModList from "../r2mm/mods/ProfileModList";
+import { wasDownloadedFromOnline } from './DownloadUtils';
 
 export async function exportModsToCombos(
     exportMods: ExportMod[],
@@ -41,6 +42,13 @@ async function extractConfigsToImportedProfile(
 ) {
     const zipEntries = await ZipProvider.instance.getEntries(file);
     const excludedFiles = ["export.r2x", "mods.yml"];
+    const blockedExtensions = [
+        '.dll', '.exe', '.scr', '.com', '.pif',
+        '.bat', '.cmd', '.ps1', '.vbs', '.vbe',
+        '.js', '.jse', '.wsf', '.wsh', '.hta',
+        '.msi', '.msix', '.sys', '.drv', '.cpl',
+        '.ocx', '.lnk', '.reg', '.inf',
+    ];
 
     for (const [index, entry] of zipEntries.entries()) {
         if (!excludedFiles.includes(entry.entryName.toLowerCase())) {
@@ -48,6 +56,11 @@ async function extractConfigsToImportedProfile(
 
             if (entry.entryName.startsWith('config/') || entry.entryName.startsWith("config\\")) {
                 outputPath = path.join(outputPath, 'BepInEx');
+            }
+
+            if (blockedExtensions.some(value => entry.entryName.toLowerCase().endsWith(value.toLowerCase()))) {
+                console.warn(`Unsafe file [${entry.entryName}] in import. Skipped.`);
+                continue;
             }
 
             await ZipProvider.instance.extractEntryTo(file, entry.entryName, outputPath);
@@ -84,6 +97,11 @@ export async function installModsToProfile(
             modName = comboMod.getMod().getName();
 
             const manifestMod = new ManifestV2().fromThunderstoreCombo(comboMod);
+
+            // Mark as downloaded from online if the state file exists in cache
+            if (await wasDownloadedFromOnline(comboMod)) {
+                manifestMod.setOnlineSource(true);
+            }
 
             if (installedVersions.includes(manifestMod.getDependencyString())) {
                 continue;

@@ -1,4 +1,4 @@
-import { InstallArgs, PackageInstaller } from "./PackageInstaller";
+import { InstallArgs, PackageInstaller, uninstallModLoader } from "./PackageInstaller";
 import path from "../providers/node/path/path";
 import FsProvider from "../providers/generic/file/FsProvider";
 import FileTree from "../model/file/FileTree";
@@ -19,10 +19,14 @@ export class ShimloaderInstaller implements PackageInstaller {
         const fs = FsProvider.instance;
         const fileRelocations = new Map<string, string>();
 
+        const entries = await fs.readdir(path.join(packagePath, "UE4SS"));
+        const findUE4SS = (name: string) =>
+            entries.find(f => f.toLowerCase() === name.toLowerCase()) ?? name;
+
         const targets = [
             ["dwmapi.dll", "dwmapi.dll"],
-            ["UE4SS/ue4ss.dll", "ue4ss.dll"],
-            ["UE4SS/UE4SS-settings.ini", "UE4SS-settings.ini"],
+            [`UE4SS/${findUE4SS("ue4ss.dll")}`, "ue4ss.dll"],
+            [`UE4SS/${findUE4SS("UE4SS-settings.ini")}`, "UE4SS-settings.ini"],
         ];
 
         const ue4ssTree = await FileTree.buildFromLocation(path.join(packagePath, "UE4SS/Mods"));
@@ -51,5 +55,9 @@ export class ShimloaderInstaller implements PackageInstaller {
         if (!await fs.exists(configDir)) {
             await fs.mkdirs(configDir);
         }
+    }
+
+    async uninstall(args: InstallArgs) {
+        await uninstallModLoader(args.mod, args.profile);
     }
 }
