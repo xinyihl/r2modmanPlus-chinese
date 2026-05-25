@@ -1,7 +1,6 @@
 <template>
     <div id="game-selection-screen">
         <EcosystemUpdateIndicator />
-        <EcosystemUpdateIndicator />
         <ModalCard id="select-platform-modal" v-show="showPlatformModal" :is-active="showPlatformModal" @close-modal="() => {showPlatformModal = false;}" class="z-max z-top">
             <template v-slot:header>
                 <h2 class='modal-title'>选择管理你游戏的平台</h2>
@@ -47,23 +46,21 @@
                                     id="game-selection-search"
                                     class="input margin-right"
                                     type="text"
-                                    placeholder="搜索..."
+                                    placeholder="Search for a game"
                                     autocomplete="off"
                                 />
                             </div>
                             <template v-if="viewMode === GameSelectionViewMode.LIST">
                                 <div class="margin-right">
                                     <button class="button is-info"
-                                       :disabled="selectedGame === null || runningMigration" @click="selectGame(selectedGame!)">选择此{{activeTab === GameInstanceType.GAME ? '游戏' : '服务器'}}</button>
+                                       :disabled="selectedGame === null || runningMigration" @click="selectGame(selectedGame!)">Select {{ activeTab.toLowerCase() }}</button>
                                 </div>
                                 <div class="margin-right">
                                     <button class="button"
-                                       :disabled="selectedGame === null || runningMigration" @click="selectDefaultGame(selectedGame!)">设置为默认值</button>
+                                       :disabled="selectedGame === null || runningMigration" @click="selectDefaultGame(selectedGame!)">Set as default</button>
                                 </div>
                             </template>
-                            </template>
                             <div>
-                                <i :class="['button', 'fas', viewMode === GameSelectionViewMode.LIST ? 'fa-th-large' : 'fa-list']" @click="toggleViewMode"></i>
                                 <i :class="['button', 'fas', viewMode === GameSelectionViewMode.LIST ? 'fa-th-large' : 'fa-list']" @click="toggleViewMode"></i>
                             </div>
                         </nav>
@@ -84,10 +81,6 @@
                         @select-game="selectGame"
                         @set-default-game="selectDefaultGame"
                     />
-                    <GameSelectionList
-                        @select-game="selectGame"
-                        @set-default-game="selectDefaultGame"
-                    />
                 </div>
             </div>
         </div>
@@ -97,17 +90,8 @@
 <script lang="ts" setup>
 import { Hero } from '../components/all';
 import { GameInstanceType } from '../model/schema/ThunderstoreSchema';
-import { GameInstanceType } from '../model/schema/ThunderstoreSchema';
 import { GameSelectionViewMode } from '../model/enums/GameSelectionViewMode';
 import ModalCard from '../components/ModalCard.vue';
-import { onMounted, ref, provide } from 'vue';
-import debounce from 'lodash.debounce';
-import { useGameSelectionComposable, gameSelectionKey } from '../components/composables/GameSelectionComposable';
-import GameSelectionList from '../components/game-selection/GameSelectionList.vue';
-import Game from '../model/game/Game';
-import { capitalize } from '../utils/StringUtils';
-import { StorePlatform as platformLabels } from '../model/platform/StorePlatform';
-import EcosystemUpdateIndicator from '../components/navigation/EcosystemUpdateIndicator.vue';
 import { onMounted, ref, provide } from 'vue';
 import debounce from 'lodash.debounce';
 import { useGameSelectionComposable, gameSelectionKey } from '../components/composables/GameSelectionComposable';
@@ -123,26 +107,6 @@ const store = getStore<State>();
 
 const gameSelection = useGameSelectionComposable();
 provide(gameSelectionKey, gameSelection);
-
-const gameSelection = useGameSelectionComposable();
-provide(gameSelectionKey, gameSelection);
-
-const {
-    selectedGame,
-    selectedPlatform,
-    filterText,
-    activeTab,
-    viewMode,
-    runningMigration,
-    isSettingDefaultPlatform,
-    markAsSelectedGame,
-    changeTab,
-    toggleViewMode,
-    proceed,
-    proceedDefault,
-    selectPlatformForGame,
-    initialize,
-} = gameSelection;
 
 const {
     selectedGame,
@@ -163,14 +127,11 @@ const {
 
 const showPlatformModal = ref<boolean>(false);
 const debouncedFilter = debounce((value: string) => { filterText.value = value; }, 100);
-const debouncedFilter = debounce((value: string) => { filterText.value = value; }, 100);
 
 function selectGame(game: Game) {
     markAsSelectedGame(game);
-    markAsSelectedGame(game);
     isSettingDefaultPlatform.value = false;
     if (game.storePlatformMetadata.length > 1) {
-        selectPlatformForGame(game);
         selectPlatformForGame(game);
         showPlatformModal.value = true;
     } else {
@@ -181,7 +142,6 @@ function selectGame(game: Game) {
 }
 
 function selectDefaultGame(game: Game) {
-    markAsSelectedGame(game);
     markAsSelectedGame(game);
     isSettingDefaultPlatform.value = true;
     if (game.storePlatformMetadata.length > 1) {
@@ -195,9 +155,7 @@ function selectDefaultGame(game: Game) {
 
 function selectPlatform() {
     showPlatformModal.value = false;
-    showPlatformModal.value = false;
     if (isSettingDefaultPlatform.value) {
-        proceedDefault();
         proceedDefault();
     } else {
         proceed();
@@ -205,10 +163,6 @@ function selectPlatform() {
 }
 
 onMounted(async () => {
-    window.app.checkForApplicationUpdates();
-    await initialize();
-    void store.dispatch('ecosystemUpdate/updateEcosystemSchema');
-});
     window.app.checkForApplicationUpdates();
     await initialize();
     void store.dispatch('ecosystemUpdate/updateEcosystemSchema');
@@ -227,10 +181,6 @@ onMounted(async () => {
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-#game-selection-search {
-    min-width: 100px;
 }
 
 #game-selection-search {
