@@ -4,9 +4,9 @@
 		<br/>
         <div class="container margin-bottom" v-if="alreadyHadValuesSet && isFlatpak">
             <div class="notification is-warning">
-                <p>您似乎已设置过启动参数。</p>
+                <p>你似乎已设置过启动参数。</p>
                 <p>{{ appName }} 的 Flatpak 版本现采用不同的封装脚本。</p>
-                <p>您必须更新启动参数以支持此变更。</p>
+                <p>你必须更新启动参数以支持此变更。</p>
             </div>
         </div>
 		<div class="container">

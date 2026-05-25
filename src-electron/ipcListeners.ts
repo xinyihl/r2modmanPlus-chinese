@@ -19,6 +19,7 @@ ipcMain.on('get-browser-window', () => {
 });
 
 ipcMain.on('update-app', () => {
+    if (process.env.FLATPAK_ID) return;
     electronUpdater.autoUpdater.checkForUpdatesAndNotify();
 });
 
