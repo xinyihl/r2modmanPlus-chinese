@@ -14,11 +14,14 @@ import { getStore } from '../../../providers/generic/store/StoreProvider';
 import { State } from '../../../store';
 import ThunderstoreMod from "../../../model/ThunderstoreMod";
 import ThunderstoreVersion from "../../../model/ThunderstoreVersion";
+import ThunderstoreMod from "../../../model/ThunderstoreMod";
+import ThunderstoreVersion from "../../../model/ThunderstoreVersion";
 
 const store = getStore<State>();
 
 type LocalModCardProps = {
     mod: ManifestV2;
+    version?: ThunderstoreVersion;
     version?: ThunderstoreVersion;
 }
 
@@ -35,6 +38,7 @@ const canBeDisabled = computed(() => !store.getters['isModLoader'](props.mod.get
 const isDeprecated = computed(() => store.state.tsMods.deprecated.get(props.mod.getName()) || false);
 const isLatestVersion = computed(() => store.getters['tsMods/isLatestVersion'](props.mod));
 const localModList = computed(() => store.state.profile.modList);
+const tsMod = computed<ThunderstoreMod>(() => store.getters['tsMods/tsMod'](props.mod));
 const tsMod = computed<ThunderstoreMod>(() => store.getters['tsMods/tsMod'](props.mod));
 
 async function updateDependencies() {
