@@ -338,5 +338,7 @@ const i18n = {
 
 summary {
     cursor: pointer;
+    display: list-item;
+    list-style: revert;
 }
 </style>

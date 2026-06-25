@@ -2,17 +2,17 @@
     <ManagerActivityBar />
     <div id="help-view">
         <Hero title="帮助" subtitle="常见问题及其潜在解决方案" hero-type="primary"/>
-        <div
-            class="tabs sticky-top sticky-top--opaque sticky-top--no-shadow sticky-top--no-padding has-background-">
-            <ul>
-                <li v-for="(key, index) in tabs" :key="`tab-${key}`"
-                    :class="[{'is-active': activeTab === key}]"
-                    @click="changeTab(key)">
-                    <a>{{tabsI[index]}}</a>
-                </li>
-            </ul>
-        </div>
         <div class="margin-right" id="help-content">
+            <div
+                class="tabs sticky-top sticky-top--opaque sticky-top--no-shadow sticky-top--no-padding has-background-">
+                <ul>
+                    <li v-for="(key, index) in tabs" :key="`tab-${key}`"
+                        :class="[{'is-active': activeTab === key}]"
+                        @click="changeTab(key)">
+                        <a>{{tabsI[index]}}</a>
+                    </li>
+                </ul>
+            </div>
             <br/>
             <div ref="General" v-if="activeTab === 'General'">
                 <h2 class="title is-5">开始安装模组</h2>
@@ -171,11 +171,10 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     flex: 1;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 #help-content {
-    overflow-y: auto;
     flex: 1;
 }
 </style>

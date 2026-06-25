@@ -9,7 +9,7 @@
             <div class="notification is-warning is-square">
                 <div class="container">
                     <p>
-                        配置文件是在至少安装了一次模组并且启动游戏后生成的。
+                        配置文件是在安装了一次模组并且启动游戏后生成的。
                     </p>
                 </div>
             </div>
@@ -197,14 +197,12 @@ function openConfig(file: ConfigFile) {
 <style lang="scss" scoped>
 .config-editor-selection-body {
     display: flex;
-    grid-template-rows: min-content 1fr;
-    overflow-y: hidden;
-    flex: 1;
     flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
 }
 
 .config-editor-selection-items {
-    overflow-y: auto;
     max-height: none;
 }
 
