@@ -16,15 +16,20 @@ import { State } from '../../../store';
 import { UnsatisfiedDependencies } from '../../../store/modules/ProfileModule';
 import ThunderstoreMod from "../../../model/ThunderstoreMod";
 import ThunderstoreVersion from "../../../model/ThunderstoreVersion";
+import { useConcerningPackageComposable } from '@r2/components/composables/ConcerningPackageComposable';
+import { useModManagementComposable } from '@r2/components/composables/ModManagementComposable';
 
 const store = getStore<State>();
 
 type LocalModCardProps = {
     mod: ManifestV2;
-    version?: ThunderstoreVersion;
+    version?: ThunderstoreVersion | undefined;
 }
 
 const props = defineProps<LocalModCardProps>();
+
+const { isConcerningPackage, wasConcerningPackage } = useConcerningPackageComposable();
+const { uninstallMod } = useModManagementComposable();
 
 const disableChangePending = ref<boolean>(false);
 const icon = useModIcon(() => props.mod);
@@ -98,27 +103,6 @@ async function enableMod(mod: ManifestV2) {
     disableChangePending.value = false;
 }
 
-async function uninstallMod() {
-    const dependants = Dependants.getDependantList(props.mod, localModList.value);
-
-    if (dependants.size > 0) {
-        store.commit('openUninstallModModal', props.mod);
-        return;
-    }
-
-    try {
-        await store.dispatch(
-            'profile/uninstallModsFromActiveProfile',
-            { mods: [props.mod] }
-        );
-    } catch (e) {
-        store.commit('error/handleError', {
-            error: R2Error.fromThrownValue(e),
-            severity: LogSeverity.ACTION_STOPPED
-        });
-    }
-}
-
 function updateMod() {
     if (tsMod.value !== undefined) {
         store.commit('openDownloadModVersionSelectModal', tsMod.value);
@@ -152,36 +136,39 @@ function viewAssociatedMods() {
 function getReadableDate(value: number): string {
     return valueToReadableDate(value);
 }
+
+function dependencyStringToModName(x: string) {
+    return x.substring(0, x.lastIndexOf('-'));
+}
+
+function openReviewModal() {
+    store.commit('openConcerningModReviewModal', props.mod);
+}
 </script>
 
 <template>
-    <ExpandableCard
-        :description="mod.getDescription()"
-        :enabled="mod.isEnabled()"
-        :id="`${mod.getAuthorName()}-${mod.getName()}-${mod.getVersionNumber()}`"
-        :image="icon"
-        :allowSorting="true">
+    <ExpandableCard :description="mod.getDescription()" :enabled="mod.isEnabled()"
+        :id="`${mod.getAuthorName()}-${mod.getName()}-${mod.getVersionNumber()}`" :image="icon" :allowSorting="true"
+        :class="[{ 'card--is-concern': isConcerningPackage(props.mod) }]">
 
         <template v-slot:title>
             <span class="non-selectable">
-                <span v-if="isDeprecated"
-                    class="tag is-danger margin-right margin-right--half-width"
+                <span v-if="isDeprecated" class="tag is-danger margin-right margin-right--half-width"
                     v-tooltip.right="'这个模组被弃用了，可能无法使用'">
                     已弃用
                 </span>
-                <span v-if="!mod.isEnabled()"
-                    class="tag is-warning margin-right margin-right--half-width"
+                <span v-if="!mod.isEnabled()" class="tag is-warning margin-right margin-right--half-width"
                     v-tooltip.right="'此模组不会在游戏中使用'">
                     已禁用
                 </span>
                 <span class="card-title selectable">
                     <component :is="mod.isEnabled() ? 'span' : 'strike'" class="selectable">
-                        {{mod.getDisplayName()}}
+                        {{ mod.getDisplayName() }}
                         <span class="selectable card-byline">
-                            v{{mod.getVersionNumber()}}
+                            v{{ mod.getVersionNumber() }}
                         </span>
                         <span :class="`card-byline ${mod.isEnabled() && 'selectable'}`">
-                            by {{mod.getAuthorName()}}
+                            by {{ mod.getAuthorName() }}
                         </span>
                     </component>
                 </span>
@@ -189,48 +176,52 @@ function getReadableDate(value: number): string {
         </template>
 
         <template v-slot:description>
-            <p class='card-timestamp' v-if="mod.getInstalledAtTime() !== 0"><strong>安装于:</strong> {{ getReadableDate(mod.getInstalledAtTime()) }}</p>
+            <p class='card-timestamp' v-if="mod.getInstalledAtTime() !== 0"><strong>安装于:</strong> {{
+                getReadableDate(mod.getInstalledAtTime()) }}</p>
             <p class='card-timestamp' v-if="version && version.getDateCreated()"><strong>发布于:</strong>
-                {{ getReadableDate(version!.getDateCreated()!.getTime()) }}</p>
+                {{ getReadableDate(version!.getDateCreated()!.getTime()) }}
+            </p>
+            <div class="notification is-warning" v-if="isConcerningPackage(props.mod)">
+                <p>此模组最初从 Thunderstore 下载，但现已无法在该网站上找到。</p>
+                <p><strong>建议你移除该模组。</strong></p>
+                <button class="button" @click.stop.prevent="openReviewModal">
+                    评价模组
+                </button>
+            </div>
         </template>
 
         <!-- Show icon button row even when card is collapsed -->
         <template v-slot:other-icons>
-            <DonateIconButton :mod="tsMod" v-if="tsMod"/>
-            <span v-if="!isLatestVersion"
-                @click.prevent.stop="updateMod()"
-                class='card-header-icon'>
+            <span v-if="wasConcerningPackage(props.mod)" class='card-header-icon'>
+                <i v-tooltip.left="`This package can no longer be found on Thunderstore`" class='fas fa-unlink'></i>
+            </span>
+            <DonateIconButton :mod="tsMod" v-if="tsMod" />
+            <span v-if="!isLatestVersion" @click.prevent.stop="updateMod()" class='card-header-icon'>
                 <i class='fas fa-cloud-upload-alt' v-tooltip.left="'有更新可用'"></i>
             </span>
-            <span v-if="disabledDependencies.length || missingDependencies.length"
-                class='card-header-icon'>
-                <i v-tooltip.left="`此模组的依赖关系存在问题`"
-                    class='fas fa-exclamation-circle'
-                ></i>
+            <span v-if="disabledDependencies.length || missingDependencies.length" class='card-header-icon'>
+                <i v-tooltip.left="`此模组的依赖关系存在问题`" class='fas fa-exclamation-circle'></i>
             </span>
-            <span v-if="canBeDisabled"
-                @click.prevent.stop="() => mod.isEnabled() ? disableMod() : enableMod(mod)"
+            <span v-if="canBeDisabled" @click.prevent.stop="() => mod.isEnabled() ? disableMod() : enableMod(mod)"
                 class='card-header-icon'>
                 <div class="field">
-                    <input :id="`switch-${mod.getName()}`"
-                        type="checkbox"
-                        :class="['switch', 'is-small', {'switch is-info' : mod.isEnabled()}]"
+                    <input :id="`switch-${mod.getName()}`" type="checkbox"
+                        :class="['switch', 'is-small', { 'switch is-info': mod.isEnabled() }]"
                         :checked="mod.isEnabled()" />
-                    <label :for="`switch-${mod.getName()}`"
-                        v-tooltip.left="mod.isEnabled() ? '禁用' : '启用'"></label>
+                    <label :for="`switch-${mod.getName()}`" v-tooltip.left="mod.isEnabled() ? '禁用' : '启用'"></label>
                 </div>
             </span>
         </template>
 
         <!-- Show bottom button row -->
-        <button @click="uninstallMod()" class='button'>
+        <button @click="uninstallMod(props.mod)" class='button'>
             卸载
         </button>
 
         <button v-if="canBeDisabled && mod.isEnabled()" @click="disableMod()" class='button'>
             禁用
         </button>
-        <button v-else-if="canBeDisabled && !mod.isEnabled()" @click="enableMod(mod)" class='button' >
+        <button v-else-if="canBeDisabled && !mod.isEnabled()" @click="enableMod(mod)" class='button'>
             启用
         </button>
 
@@ -247,20 +238,16 @@ function getReadableDate(value: number): string {
             更新
         </button>
 
-        <button v-if="missingDependencies.length"
-            @click="downloadDependency(missingDependencies[0])"
-            class='button'>
+        <button v-if="missingDependencies.length" @click="downloadDependency(missingDependencies[0]!)" class='button'>
             下载依赖
         </button>
 
-        <button v-if="disabledDependencies.length"
-            @click="enableMod(disabledDependencies[0])"
-            class='button'>
-            启用 {{disabledDependencies[0].getDisplayName()}}
+        <button v-if="disabledDependencies.length" @click="enableMod(disabledDependencies[0]!)" class='button'>
+            Enable {{ disabledDependencies[0].getDisplayName() }}
         </button>
 
-        <DonateButton v-if="tsMod" :mod="tsMod"/>
-        <DonateButton v-if="tsMod" :mod="tsMod"/>
+        <DonateButton v-if="tsMod" :mod="tsMod" />
+        <DonateButton v-if="tsMod" :mod="tsMod" />
     </ExpandableCard>
 </template>
 

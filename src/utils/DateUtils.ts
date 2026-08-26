@@ -7,7 +7,7 @@ const formatter = new Intl.DateTimeFormat('zh-CN', {
     second: 'numeric',
 });
 
-export function valueToReadableDate(date: number | Date): string {
+export function valueToReadableDate(date: number | Date | string): string {
     const dateObject: Date = new Date(date);
     return formatter.format(dateObject)
 }

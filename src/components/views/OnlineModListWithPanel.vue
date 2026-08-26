@@ -22,7 +22,7 @@
                     <i class='fas fa-map-pin' v-tooltip.left="'在 Thunderstore 上被固定'"></i>
                 </span>
                 <span class='card-header-icon' v-if="key.getDonationLink() && !readOnly">
-                    <ExternalLink :url="key.getDonationLink()" target="external" tag="span">
+                    <ExternalLink :url="key.getDonationLink()!" target="external" tag="span">
                         <i class='fas fa-heart' v-tooltip.left="'向模组作者捐款'"></i>
                     </ExternalLink>
                 </span>
@@ -56,7 +56,7 @@ type OnlineModListWithPanelProps = {
 }
 
 const props = withDefaults(defineProps<OnlineModListWithPanelProps>(), {
-    pagedModList: [],
+    pagedModList: () => [],
     selectedMod: null,
     readOnly: false,
 });
