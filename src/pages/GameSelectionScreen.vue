@@ -1,5 +1,11 @@
 <template>
-    <div id="game-selection-screen">
+    <div id="game-list-loading" v-if="!visible">
+        <div class="fa-3x">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </div>
+        <p>游戏准备中</p>
+    </div>
+    <div id="game-selection-screen" v-else>
         <EcosystemUpdateIndicator />
         <ModalCard id="select-platform-modal" v-show="showPlatformModal" :is-active="showPlatformModal" @close-modal="() => {showPlatformModal = false;}" class="z-max z-top">
             <template v-slot:header>
@@ -42,22 +48,22 @@
                             <div class="input-group input-group--flex margin-right">
                                 <input
                                     :value="filterText"
-                                    @input="(e) => debouncedFilter((e.target as HTMLInputElement).value)"
+                                    @input="(e: Event) => debouncedFilter((e.target as HTMLInputElement).value)"
                                     id="game-selection-search"
                                     class="input margin-right"
                                     type="text"
-                                    placeholder="Search for a game"
+                                    placeholder="搜索游戏"
                                     autocomplete="off"
                                 />
                             </div>
                             <template v-if="viewMode === GameSelectionViewMode.LIST">
                                 <div class="margin-right">
                                     <button class="button is-info"
-                                       :disabled="selectedGame === null || runningMigration" @click="selectGame(selectedGame!)">Select {{ activeTab.toLowerCase() }}</button>
+                                       :disabled="selectedGame === null || runningMigration" @click="selectGame(selectedGame! as Game)">选择{{ activeTab === GameInstanceType.GAME ? '游戏' : activeTab === GameInstanceType.SERVER ? '服务器' : '未知' }}</button>
                                 </div>
                                 <div class="margin-right">
                                     <button class="button"
-                                       :disabled="selectedGame === null || runningMigration" @click="selectDefaultGame(selectedGame!)">Set as default</button>
+                                       :disabled="selectedGame === null || runningMigration" @click="selectDefaultGame(selectedGame! as Game)">设为默认</button>
                                 </div>
                             </template>
                             <div>
@@ -104,6 +110,8 @@ import { getStore } from '../providers/generic/store/StoreProvider';
 import { State } from '../store';
 
 const store = getStore<State>();
+
+const visible = ref<boolean>(false);
 
 const gameSelection = useGameSelectionComposable();
 provide(gameSelectionKey, gameSelection);
@@ -164,8 +172,12 @@ function selectPlatform() {
 
 onMounted(async () => {
     window.app.checkForApplicationUpdates();
-    await initialize();
-    void store.dispatch('ecosystemUpdate/updateEcosystemSchema');
+    try {
+        await initialize();
+    } finally {
+        visible.value = true;
+        void store.dispatch('ecosystemUpdate/updateEcosystemSchema');
+    }
 });
 </script>
 
@@ -185,5 +197,13 @@ onMounted(async () => {
 
 #game-selection-search {
     min-width: 100px;
+}
+
+#game-list-loading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 </style>

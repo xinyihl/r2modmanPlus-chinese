@@ -77,7 +77,7 @@
         </div>
         <div id="mod-preview">
             <template v-if="previewMod !== null">
-                <OnlinePreviewPanel :mod="previewMod" @close="() => previewMod = null"/>
+                <OnlinePreviewPanel :mod="(previewMod as ThunderstoreMod)" @close="() => previewMod = null"/>
             </template>
         </div>
     </div>
@@ -94,10 +94,10 @@ import OnlinePreviewPanel from '../v2/OnlinePreviewPanel.vue';
 import { getStore } from '../../providers/generic/store/StoreProvider';
 import { State } from '../../store';
 import { computed, ref, watch, onMounted, defineAsyncComponent } from 'vue';
-import { useModFilters } from '../composables/ModFiltersComposable';
+import { useModFiltersComposable } from '../composables/ModFiltersComposable';
 
 const store = getStore<State>();
-const { filteredMods, searchFilter } = useModFilters();
+const { filteredMods, searchFilter } = useModFiltersComposable();
 
 const PAGE_SIZE = 40;
 
@@ -164,7 +164,6 @@ function toggleModPreview(mod: ThunderstoreMod) {
     #view-content {
         flex-grow: 1;
         overflow-y: auto;
-        padding-right: 1rem;
         height: 100%;
     }
 }
