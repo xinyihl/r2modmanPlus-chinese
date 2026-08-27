@@ -31,12 +31,12 @@ const numberDisabled = computed<number>(() => localModList.value.length - number
 
 const statusText = computed<string>(() => {
     if (numberEnabled.value === localModList.value.length) {
-        return 'All of your mods are currently enabled.';
+        return '所有模组当前已启用。';
     }
     if (numberDisabled.value === localModList.value.length) {
-        return 'All of your mods are currently disabled.';
+        return '所有模组当前已禁用。';
     }
-    return `You have ${numberDisabled.value} mod${numberDisabled.value > 1 ? 's' : ''} disabled.`;
+    return `您有 ${numberDisabled.value} 个模组已禁用。`;
 });
 
 async function enableAllMods() {

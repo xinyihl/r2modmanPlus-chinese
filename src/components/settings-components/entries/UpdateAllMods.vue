@@ -15,8 +15,8 @@ const outdatedCount = computed<number>(() => store.getters['profile/modsWithUpda
 
 const statusText = computed<string>(() =>
     outdatedCount.value === 1
-        ? '1 mod has an update available.'
-        : `${outdatedCount.value} mods have an update available.`
+        ? '有 1 个模组可更新。'
+        : `有 ${outdatedCount.value} 个模组可更新。`
 );
 
 const { isVisible } = useSettingSearch(() => props.searchTerm, [

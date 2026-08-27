@@ -19,18 +19,18 @@ const isCleaning = ref<boolean>(false);
 
 const status = computed<string>(() => {
     if (isRefreshing.value) {
-        return store.state.tsMods.thunderstoreModListUpdateStatus || 'Refreshing...';
+        return store.state.tsMods.thunderstoreModListUpdateStatus || '刷新中...';
     }
     if (store.state.tsMods.thunderstoreModListUpdateError) {
-        return `Error refreshing the mod list: ${store.state.tsMods.thunderstoreModListUpdateError.message}`;
+        return `刷新模组列表时出错：${store.state.tsMods.thunderstoreModListUpdateError.message}`;
     }
     if (hasActiveDownloads.value) {
-        return 'Refreshing the mod list is disabled while there are active downloads.';
+        return '有正在进行的下载时，无法刷新模组列表。';
     }
     if (store.state.tsMods.modsLastUpdated !== undefined) {
-        return 'Last updated on: ' + moment(store.state.tsMods.modsLastUpdated).format('MMMM Do YYYY, h:mm:ss a');
+        return '上次更新于：' + moment(store.state.tsMods.modsLastUpdated).format('YYYY年MM月DD日 HH:mm:ss');
     }
-    return 'No API information available';
+    return '暂无 API 信息';
 });
 
 const { isVisible } = useSettingSearch(() => props.searchTerm, [
@@ -55,7 +55,7 @@ async function cleanCache() {
     try {
         await store.dispatch('tsMods/resetActiveGameCache');
     } catch (e) {
-        store.commit('error/handleError', R2Error.fromThrownValue(e, 'Failed to clean the online mod list'));
+        store.commit('error/handleError', R2Error.fromThrownValue(e, '清除在线模组列表失败'));
     } finally {
         isCleaning.value = false;
     }

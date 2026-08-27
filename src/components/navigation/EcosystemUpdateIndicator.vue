@@ -37,7 +37,7 @@ function retryEcosystemUpdate() {
 const status = computed(() => {
     if (store.state.ecosystemUpdate.isInProgress) {
         return {
-            text: "Updating game list",
+            text: "正在更新游戏列表",
             iconClass: "fas fa-sync-alt fa-spin",
             isError: false,
             onClick: undefined,
@@ -52,12 +52,12 @@ const status = computed(() => {
             iconClass: "fas fa-exclamation-circle",
             isError: true,
             onClick: retryEcosystemUpdate,
-            tooltip: "Retry game list update",
+            tooltip: "重试更新游戏列表",
         };
     }
 
     return {
-        text: "You have the latest game list",
+        text: "您已拥有最新的游戏列表",
         iconClass: "fas fa-check",
         isError: false,
         onClick: undefined,
